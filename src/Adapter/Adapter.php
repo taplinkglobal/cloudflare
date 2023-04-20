@@ -5,15 +5,13 @@
  * Time: 16:06
  */
 
-namespace Cloudflare\API\Adapter;
+namespace Taplink\Cloudflare\Adapter;
 
-use Cloudflare\API\Auth\Auth;
 use Psr\Http\Message\ResponseInterface;
+use Taplink\Cloudflare\Auth\Auth;
 
 /**
  * Interface Adapter
- * @package Cloudflare\API\Adapter
- * Note that the $body fields expect a JSON key value store.
  */
 interface Adapter
 {
@@ -34,7 +32,7 @@ interface Adapter
      * @param array $data
      * @param array $headers
      *
-     * @return mixed
+     * @return ResponseInterface
      */
     public function get(string $uri, array $data = [], array $headers = []): ResponseInterface;
 
@@ -43,7 +41,7 @@ interface Adapter
      * @param array $data
      * @param array $headers
      *
-     * @return mixed
+     * @return ResponseInterface
      */
     public function post(string $uri, array $data = [], array $headers = []): ResponseInterface;
 
@@ -52,7 +50,7 @@ interface Adapter
      * @param array $data
      * @param array $headers
      *
-     * @return mixed
+     * @return ResponseInterface
      */
     public function put(string $uri, array $data = [], array $headers = []): ResponseInterface;
 
@@ -61,7 +59,7 @@ interface Adapter
      * @param array $data
      * @param array $headers
      *
-     * @return mixed
+     * @return ResponseInterface
      */
     public function patch(string $uri, array $data = [], array $headers = []): ResponseInterface;
 
@@ -70,7 +68,7 @@ interface Adapter
      * @param array $data
      * @param array $headers
      *
-     * @return mixed
+     * @return ResponseInterface
      */
     public function delete(string $uri, array $data = [], array $headers = []): ResponseInterface;
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace Cloudflare\API\Endpoints;
+namespace Taplink\Cloudflare\Endpoints;
 
-use Cloudflare\API\Adapter\Adapter;
-use Cloudflare\API\Traits\BodyAccessorTrait;
+use Taplink\Cloudflare\Adapter\Adapter;
+use Taplink\Cloudflare\Traits\BodyAccessorTrait;
 
 class AccountMembers implements API
 {
@@ -26,7 +26,7 @@ class AccountMembers implements API
             'roles' => $roles,
         ];
 
-        $account    = $this->adapter->post('accounts/' . $accountId . '/members', $options);
+        $account = $this->adapter->post('accounts/'.$accountId.'/members', $options);
         $this->body = json_decode($account->getBody());
 
         return $this->body->result;
@@ -39,10 +39,10 @@ class AccountMembers implements API
             'per_page' => $perPage,
         ];
 
-        $zone       = $this->adapter->get('accounts/' . $accountId . '/members', $query);
+        $zone = $this->adapter->get('accounts/'.$accountId.'/members', $query);
         $this->body = json_decode($zone->getBody());
 
-        return (object)[
+        return (object) [
             'result'      => $this->body->result,
             'result_info' => $this->body->result_info,
         ];

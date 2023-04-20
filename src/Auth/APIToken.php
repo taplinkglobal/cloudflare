@@ -5,7 +5,7 @@
  * Time: 22:42
  */
 
-namespace Cloudflare\API\Auth;
+namespace Taplink\Cloudflare\Auth;
 
 class APIToken implements Auth
 {
@@ -19,7 +19,7 @@ class APIToken implements Auth
     public function getHeaders(): array
     {
         return [
-            'Authorization' => 'Bearer ' . $this->apiToken
+            'Authorization' => 'Bearer '.$this->apiToken,
         ];
     }
 }

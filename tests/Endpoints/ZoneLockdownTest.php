@@ -12,7 +12,7 @@ class ZoneLockdownTest extends TestCase
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/listLockdowns.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('get')->willReturn($response);
 
         $mock->expects($this->once())
@@ -25,7 +25,7 @@ class ZoneLockdownTest extends TestCase
                 ])
             );
 
-        $zones = new \Cloudflare\API\Endpoints\ZoneLockdown($mock);
+        $zones = new \Taplink\Cloudflare\Endpoints\ZoneLockdown($mock);
         $result = $zones->listLockdowns('023e105f4ecef8ad9ca31a8372d0c353');
 
         $this->assertObjectHasAttribute('result', $result);
@@ -38,12 +38,12 @@ class ZoneLockdownTest extends TestCase
 
     public function testAddLockdown()
     {
-        $config = new \Cloudflare\API\Configurations\ZoneLockdown();
+        $config = new \Taplink\Cloudflare\Configurations\ZoneLockdown();
         $config->addIP('1.2.3.4');
 
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/addLockdown.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('post')->willReturn($response);
 
         $mock->expects($this->once())
@@ -58,7 +58,7 @@ class ZoneLockdownTest extends TestCase
                 ])
             );
 
-        $zoneLockdown = new \Cloudflare\API\Endpoints\ZoneLockdown($mock);
+        $zoneLockdown = new \Taplink\Cloudflare\Endpoints\ZoneLockdown($mock);
         $zoneLockdown->createLockdown(
             '023e105f4ecef8ad9ca31a8372d0c353',
             ['api.mysite.com/some/endpoint*'],
@@ -73,7 +73,7 @@ class ZoneLockdownTest extends TestCase
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/getRecordDetails.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('get')->willReturn($response);
 
         $mock->expects($this->once())
@@ -82,7 +82,7 @@ class ZoneLockdownTest extends TestCase
                 $this->equalTo('zones/023e105f4ecef8ad9ca31a8372d0c353/firewall/lockdowns/372e67954025e0ba6aaa6d586b9e0b59')
             );
 
-        $lockdown = new \Cloudflare\API\Endpoints\ZoneLockdown($mock);
+        $lockdown = new \Taplink\Cloudflare\Endpoints\ZoneLockdown($mock);
         $result = $lockdown->getLockdownDetails('023e105f4ecef8ad9ca31a8372d0c353', '372e67954025e0ba6aaa6d586b9e0b59');
 
         $this->assertEquals('372e67954025e0ba6aaa6d586b9e0b59', $result->id);
@@ -91,12 +91,12 @@ class ZoneLockdownTest extends TestCase
 
     public function testUpdateLockdown()
     {
-        $config = new \Cloudflare\API\Configurations\ZoneLockdown();
+        $config = new \Taplink\Cloudflare\Configurations\ZoneLockdown();
         $config->addIP('1.2.3.4');
 
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/updateLockdown.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('put')->willReturn($response);
 
         $mock->expects($this->once())
@@ -111,7 +111,7 @@ class ZoneLockdownTest extends TestCase
                 ])
             );
 
-        $zoneLockdown = new \Cloudflare\API\Endpoints\ZoneLockdown($mock);
+        $zoneLockdown = new \Taplink\Cloudflare\Endpoints\ZoneLockdown($mock);
         $zoneLockdown->updateLockdown(
             '023e105f4ecef8ad9ca31a8372d0c353',
             '372e67954025e0ba6aaa6d586b9e0b59',
@@ -124,12 +124,12 @@ class ZoneLockdownTest extends TestCase
 
     public function testDeleteLockdown()
     {
-        $config = new \Cloudflare\API\Configurations\ZoneLockdown();
+        $config = new \Taplink\Cloudflare\Configurations\ZoneLockdown();
         $config->addIP('1.2.3.4');
 
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/deleteLockdown.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('delete')->willReturn($response);
 
         $mock->expects($this->once())
@@ -138,7 +138,7 @@ class ZoneLockdownTest extends TestCase
                 $this->equalTo('zones/023e105f4ecef8ad9ca31a8372d0c353/firewall/lockdowns/372e67954025e0ba6aaa6d586b9e0b59')
             );
 
-        $zoneLockdown = new \Cloudflare\API\Endpoints\ZoneLockdown($mock);
+        $zoneLockdown = new \Taplink\Cloudflare\Endpoints\ZoneLockdown($mock);
         $zoneLockdown->deleteLockdown('023e105f4ecef8ad9ca31a8372d0c353', '372e67954025e0ba6aaa6d586b9e0b59');
         $this->assertEquals('372e67954025e0ba6aaa6d586b9e0b59', $zoneLockdown->getBody()->result->id);
     }

@@ -1,7 +1,6 @@
 <?php
 
-use Cloudflare\API\Adapter\Adapter;
-use Cloudflare\API\Endpoints\ZoneSubscriptions;
+use Taplink\Cloudflare\Endpoints\ZoneSubscriptions;
 
 class ZoneSubscriptionsTest extends TestCase
 {
@@ -9,7 +8,7 @@ class ZoneSubscriptionsTest extends TestCase
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/listZoneSubscriptions.json');
 
-        $mock = $this->getMockBuilder(Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('get')->willReturn($response);
 
         $mock->expects($this->once())
@@ -30,7 +29,7 @@ class ZoneSubscriptionsTest extends TestCase
         $postResponse = $this->getPsr7JsonResponseForFixture('Endpoints/createZoneSubscription.json');
         $getResponse = $this->getPsr7JsonResponseForFixture('Endpoints/listEmptyZoneSubscriptions.json');
 
-        $mock = $this->getMockBuilder(Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('post')->willReturn($postResponse);
         $mock->method('get')->willReturn($getResponse);
 
@@ -57,7 +56,7 @@ class ZoneSubscriptionsTest extends TestCase
         $postResponse = $this->getPsr7JsonResponseForFixture('Endpoints/createZoneSubscription.json');
         $getResponse = $this->getPsr7JsonResponseForFixture('Endpoints/listZoneSubscriptions.json');
 
-        $mock = $this->getMockBuilder(Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('put')->willReturn($postResponse);
         $mock->method('get')->willReturn($getResponse);
 

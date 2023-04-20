@@ -5,10 +5,10 @@
  * Time: 12:30
  */
 
-namespace Cloudflare\API\Endpoints;
+namespace Taplink\Cloudflare\Endpoints;
 
-use Cloudflare\API\Adapter\Adapter;
-use Cloudflare\API\Traits\BodyAccessorTrait;
+use Taplink\Cloudflare\Adapter\Adapter;
+use Taplink\Cloudflare\Traits\BodyAccessorTrait;
 
 class User implements API
 {
@@ -25,6 +25,7 @@ class User implements API
     {
         $user = $this->adapter->get('user');
         $this->body = json_decode($user->getBody());
+
         return $this->body->result;
     }
 
@@ -42,6 +43,7 @@ class User implements API
     {
         $response = $this->adapter->patch('user', $details);
         $this->body = json_decode($response->getBody());
+
         return $this->body;
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-use Cloudflare\API\Adapter\ResponseException;
-use Cloudflare\API\Adapter\JSONException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use Taplink\Cloudflare\Adapter\JSONException;
+use Taplink\Cloudflare\Adapter\ResponseException;
 
 /**
  * @SuppressWarnings(PHPMD.StaticAccess)
@@ -33,7 +33,6 @@ class ResponseExceptionTest extends TestCase
         $this->assertEquals(0, $respErr->getCode());
         $this->assertEquals($reqErr, $respErr->getPrevious());
     }
-
 
     public function testFromRequestExceptionUnknownContentType()
     {

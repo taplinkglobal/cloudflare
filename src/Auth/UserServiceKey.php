@@ -5,7 +5,7 @@
  * Time: 18:01
  */
 
-namespace Cloudflare\API\Auth;
+namespace Taplink\Cloudflare\Auth;
 
 class UserServiceKey implements Auth
 {

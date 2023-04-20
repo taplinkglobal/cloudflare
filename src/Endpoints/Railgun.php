@@ -6,10 +6,10 @@
  * Time: 11:15
  */
 
-namespace Cloudflare\API\Endpoints;
+namespace Taplink\Cloudflare\Endpoints;
 
-use Cloudflare\API\Adapter\Adapter;
-use Cloudflare\API\Traits\BodyAccessorTrait;
+use Taplink\Cloudflare\Adapter\Adapter;
+use Taplink\Cloudflare\Traits\BodyAccessorTrait;
 
 class Railgun implements API
 {
@@ -42,23 +42,23 @@ class Railgun implements API
     ): \stdClass {
         $query = [
             'page' => $page,
-            'per_page' => $perPage
+            'per_page' => $perPage,
         ];
 
-        if (!empty($direction)) {
+        if (! empty($direction)) {
             $query['direction'] = $direction;
         }
 
         $user = $this->adapter->get('railguns', $query);
         $this->body = json_decode($user->getBody());
 
-        return (object)['result' => $this->body->result, 'result_info' => $this->body->result_info];
+        return (object) ['result' => $this->body->result, 'result_info' => $this->body->result_info];
     }
 
     public function get(
         string $railgunID
     ): \stdClass {
-        $user = $this->adapter->get('railguns/' . $railgunID);
+        $user = $this->adapter->get('railguns/'.$railgunID);
         $this->body = json_decode($user->getBody());
 
         return $this->body->result;
@@ -67,10 +67,10 @@ class Railgun implements API
     public function getZones(
         string $railgunID
     ): \stdClass {
-        $user = $this->adapter->get('railguns/' . $railgunID . '/zones');
+        $user = $this->adapter->get('railguns/'.$railgunID.'/zones');
         $this->body = json_decode($user->getBody());
 
-        return (object)['result' => $this->body->result, 'result_info' => $this->body->result_info];
+        return (object) ['result' => $this->body->result, 'result_info' => $this->body->result_info];
     }
 
     public function update(
@@ -78,10 +78,10 @@ class Railgun implements API
         bool $status
     ): \stdClass {
         $query = [
-            'enabled' => $status
+            'enabled' => $status,
         ];
 
-        $user = $this->adapter->patch('railguns/' . $railgunID, $query);
+        $user = $this->adapter->patch('railguns/'.$railgunID, $query);
         $this->body = json_decode($user->getBody());
 
         return $this->body->result;
@@ -90,7 +90,7 @@ class Railgun implements API
     public function delete(
         string $railgunID
     ): bool {
-        $user = $this->adapter->delete('railguns/' . $railgunID);
+        $user = $this->adapter->delete('railguns/'.$railgunID);
         $this->body = json_decode($user->getBody());
 
         if (isset($this->body->result->id)) {

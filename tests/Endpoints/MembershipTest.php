@@ -1,13 +1,12 @@
 <?php
 
-
 class MembershipTest extends TestCase
 {
     public function testListMemberships()
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/listMemberships.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('get')->willReturn($response);
 
         $mock->expects($this->once())
@@ -24,7 +23,7 @@ class MembershipTest extends TestCase
                 ])
             );
 
-        $zones = new \Cloudflare\API\Endpoints\Membership($mock);
+        $zones = new \Taplink\Cloudflare\Endpoints\Membership($mock);
         $result = $zones->listMemberships('Demo Account', 'accepted', 1, 20, 'status', 'desc');
 
         $this->assertObjectHasAttribute('result', $result);
@@ -39,10 +38,10 @@ class MembershipTest extends TestCase
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/getMembershipDetails.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('get')->willReturn($response);
 
-        $membership = new \Cloudflare\API\Endpoints\Membership($mock);
+        $membership = new \Taplink\Cloudflare\Endpoints\Membership($mock);
         $details = $membership->getMembershipDetails('4536bcfad5faccb111b47003c79917fa');
 
         $this->assertObjectHasAttribute('id', $details);
@@ -56,7 +55,7 @@ class MembershipTest extends TestCase
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/updateMembershipStatus.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('put')->willReturn($response);
 
         $mock->expects($this->once())
@@ -64,11 +63,11 @@ class MembershipTest extends TestCase
             ->with(
                 $this->equalTo('memberships/4536bcfad5faccb111b47003c79917fa'),
                 $this->equalTo([
-                    'status' => 'accepted'
+                    'status' => 'accepted',
                 ])
             );
 
-        $membership = new \Cloudflare\API\Endpoints\Membership($mock);
+        $membership = new \Taplink\Cloudflare\Endpoints\Membership($mock);
         $membership->updateMembershipStatus('4536bcfad5faccb111b47003c79917fa', 'accepted');
         $this->assertEquals('4536bcfad5faccb111b47003c79917fa', $membership->getBody()->result->id);
     }
@@ -77,14 +76,14 @@ class MembershipTest extends TestCase
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/deleteMembership.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('delete')->willReturn($response);
 
         $mock->expects($this->once())
             ->method('delete')
             ->with($this->equalTo('memberships/4536bcfad5faccb111b47003c79917fa'));
 
-        $membership = new \Cloudflare\API\Endpoints\Membership($mock);
+        $membership = new \Taplink\Cloudflare\Endpoints\Membership($mock);
 
         $membership->deleteMembership('4536bcfad5faccb111b47003c79917fa');
 

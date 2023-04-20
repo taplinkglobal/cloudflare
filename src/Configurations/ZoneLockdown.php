@@ -6,7 +6,7 @@
  * Time: 13:43
  */
 
-namespace Cloudflare\API\Configurations;
+namespace Taplink\Cloudflare\Configurations;
 
 class ZoneLockdown implements Configurations
 {

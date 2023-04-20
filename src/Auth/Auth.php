@@ -5,7 +5,7 @@
  * Time: 16:52
  */
 
-namespace Cloudflare\API\Auth;
+namespace Taplink\Cloudflare\Auth;
 
 interface Auth
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Cloudflare\API\Endpoints;
+namespace Taplink\Cloudflare\Endpoints;
 
-use Cloudflare\API\Adapter\Adapter;
-use Cloudflare\API\Traits\BodyAccessorTrait;
 use stdClass;
+use Taplink\Cloudflare\Adapter\Adapter;
+use Taplink\Cloudflare\Traits\BodyAccessorTrait;
 
 class AccountRoles implements API
 {
@@ -22,10 +22,10 @@ class AccountRoles implements API
 
     public function listAccountRoles(string $accountId): stdClass
     {
-        $roles      = $this->adapter->get('accounts/' . $accountId . '/roles');
+        $roles = $this->adapter->get('accounts/'.$accountId.'/roles');
         $this->body = json_decode($roles->getBody());
 
-        return (object)[
+        return (object) [
             'result'      => $this->body->result,
             'result_info' => $this->body->result_info,
         ];

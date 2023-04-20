@@ -1,15 +1,15 @@
 <?php
 
-namespace Cloudflare\API\Endpoints;
+namespace Taplink\Cloudflare\Endpoints;
 
-use Cloudflare\API\Adapter\Adapter;
-use Cloudflare\API\Configurations\Configurations;
-use Cloudflare\API\Traits\BodyAccessorTrait;
+use Taplink\Cloudflare\Adapter\Adapter;
+use Taplink\Cloudflare\Configurations\Configurations;
+use Taplink\Cloudflare\Traits\BodyAccessorTrait;
 
 class AccessRules implements API
 {
     use BodyAccessorTrait;
-    
+
     private $adapter;
 
     public function __construct(Adapter $adapter)
@@ -49,41 +49,41 @@ class AccessRules implements API
         $query = [
             'page' => $page,
             'per_page' => $perPage,
-            'match' => $match
+            'match' => $match,
         ];
 
-        if (!empty($scopeType)) {
+        if (! empty($scopeType)) {
             $query['scope_type'] = $scopeType;
         }
 
-        if (!empty($mode)) {
+        if (! empty($mode)) {
             $query['mode'] = $mode;
         }
 
-        if (!empty($configurationTarget)) {
+        if (! empty($configurationTarget)) {
             $query['configuration_target'] = $configurationTarget;
         }
 
-        if (!empty($configurationValue)) {
+        if (! empty($configurationValue)) {
             $query['configuration_value'] = $configurationValue;
         }
 
-        if (!empty($order)) {
+        if (! empty($order)) {
             $query['order'] = $order;
         }
 
-        if (!empty($direction)) {
+        if (! empty($direction)) {
             $query['direction'] = $direction;
         }
 
-        if (!empty($notes)) {
+        if (! empty($notes)) {
             $query['notes'] = $notes;
         }
 
-        $data = $this->adapter->get('zones/' . $zoneID . '/firewall/access_rules/rules', $query);
+        $data = $this->adapter->get('zones/'.$zoneID.'/firewall/access_rules/rules', $query);
         $this->body = json_decode($data->getBody());
 
-        return (object)['result' => $this->body->result, 'result_info' => $this->body->result_info];
+        return (object) ['result' => $this->body->result, 'result_info' => $this->body->result_info];
     }
 
     public function createRule(
@@ -94,14 +94,14 @@ class AccessRules implements API
     ): bool {
         $options = [
             'mode' => $mode,
-            'configuration' => $configuration->getArray()
+            'configuration' => $configuration->getArray(),
         ];
 
         if ($notes !== null) {
             $options['notes'] = $notes;
         }
 
-        $query = $this->adapter->post('zones/' . $zoneID . '/firewall/access_rules/rules', $options);
+        $query = $this->adapter->post('zones/'.$zoneID.'/firewall/access_rules/rules', $options);
 
         $this->body = json_decode($query->getBody());
 
@@ -119,14 +119,14 @@ class AccessRules implements API
         string $notes = null
     ): bool {
         $options = [
-            'mode' => $mode
+            'mode' => $mode,
         ];
 
         if ($notes !== null) {
             $options['notes'] = $notes;
         }
 
-        $query = $this->adapter->patch('zones/' . $zoneID . '/firewall/access_rules/rules/' . $ruleID, $options);
+        $query = $this->adapter->patch('zones/'.$zoneID.'/firewall/access_rules/rules/'.$ruleID, $options);
 
         $this->body = json_decode($query->getBody());
 
@@ -140,10 +140,10 @@ class AccessRules implements API
     public function deleteRule(string $zoneID, string $ruleID, string $cascade = 'none'): bool
     {
         $options = [
-            'cascade' => $cascade
+            'cascade' => $cascade,
         ];
 
-        $data = $this->adapter->delete('zones/' . $zoneID . '/firewall/access_rules/rules/' . $ruleID, $options);
+        $data = $this->adapter->delete('zones/'.$zoneID.'/firewall/access_rules/rules/'.$ruleID, $options);
 
         $this->body = json_decode($data->getBody());
 

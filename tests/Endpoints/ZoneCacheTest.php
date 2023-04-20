@@ -6,7 +6,7 @@ class ZoneCacheTest extends TestCase
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/cachePurgeEverything.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('post')->willReturn($response);
 
         $mock->expects($this->once())
@@ -16,7 +16,7 @@ class ZoneCacheTest extends TestCase
                 $this->equalTo(['purge_everything' => true])
             );
 
-        $zones = new \Cloudflare\API\Endpoints\Zones($mock);
+        $zones = new \Taplink\Cloudflare\Endpoints\Zones($mock);
         $result = $zones->cachePurgeEverything('c2547eb745079dac9320b638f5e225cf483cc5cfdda41');
 
         $this->assertTrue($result);
@@ -27,7 +27,7 @@ class ZoneCacheTest extends TestCase
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/cachePurgeHost.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('post')->willReturn($response);
 
         $mock->expects($this->once())
@@ -38,12 +38,12 @@ class ZoneCacheTest extends TestCase
                     [
                         'files' => [],
                         'tags' => [],
-                        'hosts' => ['dash.cloudflare.com']
+                        'hosts' => ['dash.cloudflare.com'],
                     ]
                 )
             );
 
-        $zones = new \Cloudflare\API\Endpoints\Zones($mock);
+        $zones = new \Taplink\Cloudflare\Endpoints\Zones($mock);
         $result = $zones->cachePurge('c2547eb745079dac9320b638f5e225cf483cc5cfdda41', [], [], ['dash.cloudflare.com']);
 
         $this->assertTrue($result);
@@ -54,7 +54,7 @@ class ZoneCacheTest extends TestCase
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/cachePurge.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('post')->willReturn($response);
 
         $mock->expects($this->once())
@@ -63,11 +63,11 @@ class ZoneCacheTest extends TestCase
                 $this->equalTo('zones/c2547eb745079dac9320b638f5e225cf483cc5cfdda41/purge_cache'),
                 $this->equalTo(['files' => [
                     'https://example.com/file.jpg',
-                ]
+                ],
                 ])
             );
 
-        $zones = new \Cloudflare\API\Endpoints\Zones($mock);
+        $zones = new \Taplink\Cloudflare\Endpoints\Zones($mock);
         $result = $zones->cachePurge('c2547eb745079dac9320b638f5e225cf483cc5cfdda41', [
             'https://example.com/file.jpg',
         ]);

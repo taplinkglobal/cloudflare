@@ -3,7 +3,7 @@
 ## Cloudflare API version 4
 
 The Cloudflare API can be found [here](https://api.cloudflare.com/).
-Each API call is provided via a similarly named function within various classes in the **Cloudflare\API\Endpoints** namespace:
+Each API call is provided via a similarly named function within various classes in the **Taplink\Cloudflare\Endpoints** namespace:
 
 - [x] [DNS Records](https://www.cloudflare.com/dns/)
 - [x] [DNS Analytics](https://api.cloudflare.com/#dns-analytics-table)
@@ -29,9 +29,9 @@ Note that this repository is currently under development, additional classes and
 ## Getting Started
 
 ```php
-$key     = new Cloudflare\API\Auth\APIKey('user@example.com', 'apiKey');
-$adapter = new Cloudflare\API\Adapter\Guzzle($key);
-$user    = new Cloudflare\API\Endpoints\User($adapter);
+$key     = new Taplink\Cloudflare\Auth\APIKey('user@example.com', 'apiKey');
+$adapter = new Taplink\Cloudflare\Adapter\Guzzle($key);
+$user    = new Taplink\Cloudflare\Endpoints\User($adapter);
 
 echo $user->getUserID();
 ```

@@ -10,7 +10,7 @@ class ConfigurationsZoneLockdownTest extends TestCase
 {
     public function testGetArray()
     {
-        $configuration = new \Cloudflare\API\Configurations\ZoneLockdown();
+        $configuration = new \Taplink\Cloudflare\Configurations\ZoneLockdown();
         $configuration->addIP('1.2.3.4');
 
         $array = $configuration->getArray();

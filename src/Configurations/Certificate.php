@@ -1,11 +1,13 @@
 <?php
 
-namespace Cloudflare\API\Configurations;
+namespace Taplink\Cloudflare\Configurations;
 
 class Certificate implements Configurations
 {
     const ORIGIN_RSA = 'origin-rsa';
+
     const ORIGIN_ECC = 'origin-ecc';
+
     const KEYLESS_CERTIFICATE = 'keyless-certificate';
 
     private $config = [];

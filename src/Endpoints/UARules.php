@@ -6,11 +6,11 @@
  * Time: 15:17
  */
 
-namespace Cloudflare\API\Endpoints;
+namespace Taplink\Cloudflare\Endpoints;
 
-use Cloudflare\API\Configurations\Configurations;
-use Cloudflare\API\Adapter\Adapter;
-use Cloudflare\API\Traits\BodyAccessorTrait;
+use Taplink\Cloudflare\Adapter\Adapter;
+use Taplink\Cloudflare\Configurations\Configurations;
+use Taplink\Cloudflare\Traits\BodyAccessorTrait;
 
 class UARules implements API
 {
@@ -30,13 +30,13 @@ class UARules implements API
     ): \stdClass {
         $query = [
             'page' => $page,
-            'per_page' => $perPage
+            'per_page' => $perPage,
         ];
 
-        $user = $this->adapter->get('zones/' . $zoneID . '/firewall/ua_rules', $query);
+        $user = $this->adapter->get('zones/'.$zoneID.'/firewall/ua_rules', $query);
         $this->body = json_decode($user->getBody());
 
-        return (object)['result' => $this->body->result, 'result_info' => $this->body->result_info];
+        return (object) ['result' => $this->body->result, 'result_info' => $this->body->result_info];
     }
 
     public function createRule(
@@ -48,7 +48,7 @@ class UARules implements API
     ): bool {
         $options = [
             'mode' => $mode,
-            'configurations' => $configuration->getArray()
+            'configurations' => $configuration->getArray(),
         ];
 
         if ($ruleID !== null) {
@@ -59,7 +59,7 @@ class UARules implements API
             $options['description'] = $description;
         }
 
-        $user = $this->adapter->post('zones/' . $zoneID . '/firewall/ua_rules', $options);
+        $user = $this->adapter->post('zones/'.$zoneID.'/firewall/ua_rules', $options);
 
         $this->body = json_decode($user->getBody());
 
@@ -72,8 +72,9 @@ class UARules implements API
 
     public function getRuleDetails(string $zoneID, string $blockID): \stdClass
     {
-        $user = $this->adapter->get('zones/' . $zoneID . '/firewall/ua_rules/' . $blockID);
+        $user = $this->adapter->get('zones/'.$zoneID.'/firewall/ua_rules/'.$blockID);
         $this->body = json_decode($user->getBody());
+
         return $this->body->result;
     }
 
@@ -81,20 +82,20 @@ class UARules implements API
         string $zoneID,
         string $ruleID,
         string $mode,
-        \Cloudflare\API\Configurations\UARules $configuration,
+        \Taplink\Cloudflare\Configurations\UARules $configuration,
         string $description = null
     ): bool {
         $options = [
             'mode' => $mode,
             'id' => $ruleID,
-            'configurations' => $configuration->getArray()
+            'configurations' => $configuration->getArray(),
         ];
 
         if ($description !== null) {
             $options['description'] = $description;
         }
 
-        $user = $this->adapter->put('zones/' . $zoneID . '/firewall/ua_rules/' . $ruleID, $options);
+        $user = $this->adapter->put('zones/'.$zoneID.'/firewall/ua_rules/'.$ruleID, $options);
 
         $this->body = json_decode($user->getBody());
 
@@ -107,7 +108,7 @@ class UARules implements API
 
     public function deleteRule(string $zoneID, string $ruleID): bool
     {
-        $user = $this->adapter->delete('zones/' . $zoneID . '/firewall/ua_rules/' . $ruleID);
+        $user = $this->adapter->delete('zones/'.$zoneID.'/firewall/ua_rules/'.$ruleID);
 
         $this->body = json_decode($user->getBody());
 

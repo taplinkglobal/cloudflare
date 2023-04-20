@@ -5,9 +5,9 @@
  * Time: 12:31
  */
 
-namespace Cloudflare\API\Endpoints;
+namespace Taplink\Cloudflare\Endpoints;
 
-use Cloudflare\API\Adapter\Adapter;
+use Taplink\Cloudflare\Adapter\Adapter;
 
 interface API
 {

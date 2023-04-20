@@ -6,10 +6,10 @@
  * Time: 23:28
  */
 
-namespace Cloudflare\API\Endpoints;
+namespace Taplink\Cloudflare\Endpoints;
 
-use Cloudflare\API\Adapter\Adapter;
-use Cloudflare\API\Traits\BodyAccessorTrait;
+use Taplink\Cloudflare\Adapter\Adapter;
+use Taplink\Cloudflare\Traits\BodyAccessorTrait;
 
 class ZoneSettings implements API
 {
@@ -25,9 +25,9 @@ class ZoneSettings implements API
     public function getMinifySetting($zoneID)
     {
         $return = $this->adapter->get(
-            'zones/' . $zoneID . '/settings/minify'
+            'zones/'.$zoneID.'/settings/minify'
         );
-        $body   = json_decode($return->getBody());
+        $body = json_decode($return->getBody());
 
         if ($body->success) {
             return $body->result->value;
@@ -39,9 +39,9 @@ class ZoneSettings implements API
     public function getRocketLoaderSetting($zoneID)
     {
         $return = $this->adapter->get(
-            'zones/' . $zoneID . '/settings/rocket_loader'
+            'zones/'.$zoneID.'/settings/rocket_loader'
         );
-        $body   = json_decode($return->getBody());
+        $body = json_decode($return->getBody());
 
         if ($body->success) {
             return $body->result->value;
@@ -53,9 +53,9 @@ class ZoneSettings implements API
     public function getAlwaysOnlineSetting($zoneID)
     {
         $return = $this->adapter->get(
-            'zones/' . $zoneID . '/settings/always_online'
+            'zones/'.$zoneID.'/settings/always_online'
         );
-        $body   = json_decode($return->getBody());
+        $body = json_decode($return->getBody());
 
         if ($body->success) {
             return $body->result->value;
@@ -67,9 +67,9 @@ class ZoneSettings implements API
     public function getEmailObfuscationSetting($zoneID)
     {
         $return = $this->adapter->get(
-            'zones/' . $zoneID . '/settings/email_obfuscation'
+            'zones/'.$zoneID.'/settings/email_obfuscation'
         );
-        $body   = json_decode($return->getBody());
+        $body = json_decode($return->getBody());
 
         if ($body->success) {
             return $body->result->value;
@@ -81,9 +81,9 @@ class ZoneSettings implements API
     public function getServerSideExcludeSetting($zoneID)
     {
         $return = $this->adapter->get(
-            'zones/' . $zoneID . '/settings/server_side_exclude'
+            'zones/'.$zoneID.'/settings/server_side_exclude'
         );
-        $body   = json_decode($return->getBody());
+        $body = json_decode($return->getBody());
 
         if ($body->success) {
             return $body->result->value;
@@ -95,9 +95,9 @@ class ZoneSettings implements API
     public function getHotlinkProtectionSetting($zoneID)
     {
         $return = $this->adapter->get(
-            'zones/' . $zoneID . '/settings/hotlink_protection'
+            'zones/'.$zoneID.'/settings/hotlink_protection'
         );
-        $body   = json_decode($return->getBody());
+        $body = json_decode($return->getBody());
 
         if ($body->success) {
             return $body->result->value;
@@ -109,9 +109,9 @@ class ZoneSettings implements API
     public function getBrowserCacheTtlSetting($zoneID)
     {
         $return = $this->adapter->get(
-            'zones/' . $zoneID . '/settings/browser_cache_ttl'
+            'zones/'.$zoneID.'/settings/browser_cache_ttl'
         );
-        $body   = json_decode($return->getBody());
+        $body = json_decode($return->getBody());
 
         if ($body->success) {
             return $body->result->value;
@@ -123,12 +123,12 @@ class ZoneSettings implements API
     public function updateBrowserCacheTtlSetting($zoneID, $value)
     {
         $return = $this->adapter->patch(
-            'zones/' . $zoneID . '/settings/browser_cache_ttl',
+            'zones/'.$zoneID.'/settings/browser_cache_ttl',
             [
-                'value' => $value
+                'value' => $value,
             ]
         );
-        $body   = json_decode($return->getBody());
+        $body = json_decode($return->getBody());
 
         if ($body->success) {
             return true;
@@ -140,7 +140,7 @@ class ZoneSettings implements API
     public function updateMinifySetting($zoneID, $html, $css, $javascript)
     {
         $return = $this->adapter->patch(
-            'zones/' . $zoneID . '/settings/minify',
+            'zones/'.$zoneID.'/settings/minify',
             [
                 'value' => [
                     'html' => $html,
@@ -149,7 +149,7 @@ class ZoneSettings implements API
                 ],
             ]
         );
-        $body   = json_decode($return->getBody());
+        $body = json_decode($return->getBody());
 
         if ($body->success) {
             return true;
@@ -161,12 +161,12 @@ class ZoneSettings implements API
     public function updateRocketLoaderSetting($zoneID, $value)
     {
         $return = $this->adapter->patch(
-            'zones/' . $zoneID . '/settings/rocket_loader',
+            'zones/'.$zoneID.'/settings/rocket_loader',
             [
                 'value' => $value,
             ]
         );
-        $body   = json_decode($return->getBody());
+        $body = json_decode($return->getBody());
 
         if ($body->success) {
             return true;
@@ -178,12 +178,12 @@ class ZoneSettings implements API
     public function updateAlwaysOnlineSetting($zoneID, $value)
     {
         $return = $this->adapter->patch(
-            'zones/' . $zoneID . '/settings/always_online',
+            'zones/'.$zoneID.'/settings/always_online',
             [
                 'value' => $value,
             ]
         );
-        $body   = json_decode($return->getBody());
+        $body = json_decode($return->getBody());
 
         if ($body->success) {
             return true;
@@ -195,12 +195,12 @@ class ZoneSettings implements API
     public function updateEmailObfuscationSetting($zoneID, $value)
     {
         $return = $this->adapter->patch(
-            'zones/' . $zoneID . '/settings/email_obfuscation',
+            'zones/'.$zoneID.'/settings/email_obfuscation',
             [
                 'value' => $value,
             ]
         );
-        $body   = json_decode($return->getBody());
+        $body = json_decode($return->getBody());
 
         if ($body->success) {
             return true;
@@ -212,12 +212,12 @@ class ZoneSettings implements API
     public function updateHotlinkProtectionSetting($zoneID, $value)
     {
         $return = $this->adapter->patch(
-            'zones/' . $zoneID . '/settings/hotlink_protection',
+            'zones/'.$zoneID.'/settings/hotlink_protection',
             [
                 'value' => $value,
             ]
         );
-        $body   = json_decode($return->getBody());
+        $body = json_decode($return->getBody());
 
         if ($body->success) {
             return true;
@@ -229,9 +229,9 @@ class ZoneSettings implements API
     public function updateServerSideExcludeSetting($zoneID, $value)
     {
         $return = $this->adapter->patch(
-            'zones/' . $zoneID . '/settings/server_side_exclude',
+            'zones/'.$zoneID.'/settings/server_side_exclude',
             [
-                'value' => $value
+                'value' => $value,
             ]
         );
         $body = json_decode($return->getBody());

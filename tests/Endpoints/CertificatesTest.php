@@ -1,6 +1,6 @@
 <?php
 
-use Cloudflare\API\Endpoints\Certificates;
+use Taplink\Cloudflare\Endpoints\Certificates;
 
 class CertificatesTest extends TestCase
 {
@@ -8,7 +8,7 @@ class CertificatesTest extends TestCase
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/listCertificates.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('get')->willReturn($response);
 
         $mock->expects($this->once())
@@ -40,7 +40,7 @@ class CertificatesTest extends TestCase
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/getCertificate.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('get')->willReturn($response);
 
         $mock->expects($this->once())
@@ -71,7 +71,7 @@ class CertificatesTest extends TestCase
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/getCertificate.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('delete')->willReturn($response);
 
         $mock->expects($this->once())
@@ -93,15 +93,15 @@ class CertificatesTest extends TestCase
 
     public function testCreateCertificate()
     {
-        $certificate = new \Cloudflare\API\Configurations\Certificate();
+        $certificate = new \Taplink\Cloudflare\Configurations\Certificate();
         $certificate->setHostnames(['foo.example.com', 'bar.exapmle.com']);
-        $certificate->setRequestType(\Cloudflare\API\Configurations\Certificate::ORIGIN_ECC);
+        $certificate->setRequestType(\Taplink\Cloudflare\Configurations\Certificate::ORIGIN_ECC);
         $certificate->setRequestedValidity(365);
         $certificate->setCsr('some-csr-data-barbar');
 
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/getCertificate.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('post')->willReturn($response);
 
         $mock->expects($this->once())

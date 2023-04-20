@@ -5,12 +5,12 @@
  * Date: 13/05/2019
  */
 
-namespace Cloudflare\API\Endpoints;
+namespace Taplink\Cloudflare\Endpoints;
 
-use Cloudflare\API\Adapter\Adapter;
-use Cloudflare\API\Configurations\ConfigurationsException;
-use Cloudflare\API\Configurations\Pool;
-use Cloudflare\API\Traits\BodyAccessorTrait;
+use Taplink\Cloudflare\Adapter\Adapter;
+use Taplink\Cloudflare\Configurations\ConfigurationsException;
+use Taplink\Cloudflare\Configurations\Pool;
+use Taplink\Cloudflare\Traits\BodyAccessorTrait;
 
 class Pools implements API
 {
@@ -29,7 +29,7 @@ class Pools implements API
      */
     public function listPools(string $accountID)
     {
-        $pools = $this->adapter->get('accounts/' . $accountID . '/load_balancers/pools');
+        $pools = $this->adapter->get('accounts/'.$accountID.'/load_balancers/pools');
         $this->body = json_decode($pools->getBody());
 
         return $this->body->result;
@@ -42,8 +42,9 @@ class Pools implements API
      */
     public function getPoolDetails(string $accountID, string $poolID)
     {
-        $pool = $this->adapter->get('accounts/' . $accountID . '/load_balancers/pools/' . $poolID);
+        $pool = $this->adapter->get('accounts/'.$accountID.'/load_balancers/pools/'.$poolID);
         $this->body = json_decode($pool->getBody());
+
         return $this->body->result;
     }
 
@@ -54,8 +55,9 @@ class Pools implements API
      */
     public function getPoolHealthDetails(string $accountID, string $poolID)
     {
-        $pool = $this->adapter->get('accounts/' . $accountID . '/load_balancers/pools/' . $poolID . '/health');
+        $pool = $this->adapter->get('accounts/'.$accountID.'/load_balancers/pools/'.$poolID.'/health');
         $this->body = json_decode($pool->getBody());
+
         return $this->body->result;
     }
 
@@ -71,7 +73,7 @@ class Pools implements API
 
         $origins = [];
         foreach ($pool->origins as $origin) {
-            $origins[] = (array)$origin;
+            $origins[] = (array) $origin;
         }
         $poolConfiguration = new Pool($pool->name, $origins);
         $poolConfiguration->setDescription($pool->description);
@@ -103,7 +105,7 @@ class Pools implements API
     ): bool {
         $options = $poolConfiguration->getArray();
 
-        $query = $this->adapter->put('accounts/' . $accountID . '/load_balancers/pools/' . $poolID, $options);
+        $query = $this->adapter->put('accounts/'.$accountID.'/load_balancers/pools/'.$poolID, $options);
 
         $this->body = json_decode($query->getBody());
 
@@ -125,7 +127,7 @@ class Pools implements API
     ): bool {
         $options = $poolConfiguration->getArray();
 
-        $query = $this->adapter->post('accounts/' . $accountID . '/load_balancers/pools', $options);
+        $query = $this->adapter->post('accounts/'.$accountID.'/load_balancers/pools', $options);
 
         $this->body = json_decode($query->getBody());
 
@@ -143,7 +145,7 @@ class Pools implements API
      */
     public function deletePool(string $accountID, string $poolID): bool
     {
-        $pool = $this->adapter->delete('accounts/' . $accountID . '/load_balancers/pools/' . $poolID);
+        $pool = $this->adapter->delete('accounts/'.$accountID.'/load_balancers/pools/'.$poolID);
 
         $this->body = json_decode($pool->getBody());
 

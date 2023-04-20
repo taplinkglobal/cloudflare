@@ -6,7 +6,7 @@
  * Time: 18:37
  */
 
-namespace Cloudflare\API\Configurations;
+namespace Taplink\Cloudflare\Configurations;
 
 class PageRulesTargets implements Configurations
 {
@@ -19,9 +19,9 @@ class PageRulesTargets implements Configurations
                 'target' => 'url',
                 'constraint' => [
                     'operator' => 'matches',
-                    'value' => $queryUrl
-                ]
-            ]
+                    'value' => $queryUrl,
+                ],
+            ],
         ];
     }
 

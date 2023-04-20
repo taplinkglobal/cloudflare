@@ -1,21 +1,21 @@
 <?php
 
-use Cloudflare\API\Adapter\ResponseException;
+use Taplink\Cloudflare\Adapter\ResponseException;
 
 class GuzzleTest extends TestCase
 {
     private $client;
 
-    public function setUp()
+    public function setUp():void
     {
-        $auth = $this->getMockBuilder(\Cloudflare\API\Auth\Auth::class)
+        $auth = $this->getMockBuilder(\Taplink\Cloudflare\Auth\Auth::class)
             ->setMethods(['getHeaders'])
             ->getMock();
 
         $auth->method('getHeaders')
             ->willReturn(['X-Testing' => 'Test']);
 
-        $this->client = new \Cloudflare\API\Adapter\Guzzle($auth, 'https://httpbin.org/');
+        $this->client = new \Taplink\Cloudflare\Adapter\Guzzle($auth, 'https://httpbin.org/');
     }
 
     public function testGet()

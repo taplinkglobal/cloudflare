@@ -2,8 +2,8 @@
 
 namespace Endpoints;
 
-use Cloudflare\API\Adapter\Adapter;
-use Cloudflare\API\Endpoints\AccountRoles;
+use Taplink\Cloudflare\Adapter\Adapter;
+use Taplink\Cloudflare\Endpoints\AccountRoles;
 use TestCase;
 
 class AccountRolesTest extends TestCase
@@ -12,14 +12,14 @@ class AccountRolesTest extends TestCase
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/listAccountRoles.json');
 
-        $adapter = $this->getMockBuilder(Adapter::class)->getMock();
+        $adapter = $this->createMock(Adapter::class);
         $adapter->method('get')->willReturn($response);
 
         $adapter->expects($this->once())
             ->method('get')
             ->with($this->equalTo('accounts/023e105f4ecef8ad9ca31a8372d0c353/roles'));
 
-        $roles  = new AccountRoles($adapter);
+        $roles = new AccountRoles($adapter);
         $result = $roles->listAccountRoles('023e105f4ecef8ad9ca31a8372d0c353');
 
         $this->assertObjectHasAttribute('result', $result);

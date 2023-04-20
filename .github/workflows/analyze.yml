@@ -1,0 +1,25 @@
+name: Analyze
+on:
+  push:
+    branches-ignore:
+      - staging
+      - master
+jobs:
+  phpstan:
+    name: PHPStan
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+
+      - name: Install Dependencies via Composer
+        run: composer install --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist --ignore-platform-req=php
+
+      - name: PHPStan
+        run: make analyze
+

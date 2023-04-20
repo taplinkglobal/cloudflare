@@ -5,12 +5,12 @@
  * Date: 13/05/2019
  */
 
-namespace Cloudflare\API\Endpoints;
+namespace Taplink\Cloudflare\Endpoints;
 
-use Cloudflare\API\Adapter\Adapter;
-use Cloudflare\API\Configurations\ConfigurationsException;
-use Cloudflare\API\Configurations\LoadBalancer;
-use Cloudflare\API\Traits\BodyAccessorTrait;
+use Taplink\Cloudflare\Adapter\Adapter;
+use Taplink\Cloudflare\Configurations\ConfigurationsException;
+use Taplink\Cloudflare\Configurations\LoadBalancer;
+use Taplink\Cloudflare\Traits\BodyAccessorTrait;
 
 class LoadBalancers implements API
 {
@@ -29,7 +29,7 @@ class LoadBalancers implements API
      */
     public function listLoadBalancers(string $zoneID)
     {
-        $loadBalancers = $this->adapter->get('zones/' . $zoneID . '/load_balancers');
+        $loadBalancers = $this->adapter->get('zones/'.$zoneID.'/load_balancers');
         $this->body = json_decode($loadBalancers->getBody());
 
         return $this->body->result;
@@ -42,8 +42,9 @@ class LoadBalancers implements API
      */
     public function getLoadBalancerDetails(string $zoneID, string $loadBalancerID)
     {
-        $loadBalancer = $this->adapter->get('zones/' . $zoneID . '/load_balancers/' . $loadBalancerID);
+        $loadBalancer = $this->adapter->get('zones/'.$zoneID.'/load_balancers/'.$loadBalancerID);
         $this->body = json_decode($loadBalancer->getBody());
+
         return $this->body->result;
     }
 
@@ -104,7 +105,7 @@ class LoadBalancers implements API
     ): bool {
         $options = $lbConfiguration->getArray();
 
-        $query = $this->adapter->put('zones/' . $zoneID . '/load_balancers/' . $loadBalancerID, $options);
+        $query = $this->adapter->put('zones/'.$zoneID.'/load_balancers/'.$loadBalancerID, $options);
 
         $this->body = json_decode($query->getBody());
 
@@ -126,7 +127,7 @@ class LoadBalancers implements API
     ): bool {
         $options = $lbConfiguration->getArray();
 
-        $query = $this->adapter->post('zones/' . $zoneID . '/load_balancers', $options);
+        $query = $this->adapter->post('zones/'.$zoneID.'/load_balancers', $options);
 
         $this->body = json_decode($query->getBody());
 
@@ -144,7 +145,7 @@ class LoadBalancers implements API
      */
     public function deleteLoadBalancer(string $zoneID, string $loadBalancerID): bool
     {
-        $loadBalancer = $this->adapter->delete('zones/' . $zoneID . '/load_balancers/' . $loadBalancerID);
+        $loadBalancer = $this->adapter->delete('zones/'.$zoneID.'/load_balancers/'.$loadBalancerID);
 
         $this->body = json_decode($loadBalancer->getBody());
 

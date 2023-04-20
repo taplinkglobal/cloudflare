@@ -1,11 +1,11 @@
 <?php
 
-namespace Cloudflare\API\Adapter;
+namespace Taplink\Cloudflare\Adapter;
 
-use Cloudflare\API\Auth\Auth;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
+use Taplink\Cloudflare\Auth\Auth;
 
 class Guzzle implements Adapter
 {
@@ -25,10 +25,9 @@ class Guzzle implements Adapter
         $this->client = new Client([
             'base_uri' => $baseURI,
             'headers' => $headers,
-            'Accept' => 'application/json'
+            'Accept' => 'application/json',
         ]);
     }
-
 
     /**
      * @inheritDoc
@@ -75,7 +74,7 @@ class Guzzle implements Adapter
      */
     public function request(string $method, string $uri, array $data = [], array $headers = [])
     {
-        if (!in_array($method, ['get', 'post', 'put', 'patch', 'delete'])) {
+        if (! in_array($method, ['get', 'post', 'put', 'patch', 'delete'])) {
             throw new \InvalidArgumentException('Request method must be get, post, put, patch, or delete');
         }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Cloudflare\API\Traits;
+namespace Taplink\Cloudflare\Traits;
 
 trait BodyAccessorTrait
 {
