@@ -1,4 +1,5 @@
 <?php
+
 use GuzzleHttp\Psr7;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 
@@ -20,7 +21,7 @@ abstract class TestCase extends BaseTestCase
 
         $this->assertFileExists($path);
 
-        $stream = Psr7\stream_for(file_get_contents($path));
+        $stream = Psr7\Utils::streamFor(file_get_contents($path));
 
         $this->assertInstanceOf(Psr7\Stream::class, $stream);
 
@@ -31,7 +32,7 @@ abstract class TestCase extends BaseTestCase
      * Returns a PSR7 Response (JSON) for a given fixture.
      *
      * @param  string        $fixture    The fixture to create the response for.
-     * @param  integer       $statusCode A HTTP Status Code for the response.
+     * @param  int       $statusCode A HTTP Status Code for the response.
      * @return Psr7\Response
      */
     protected function getPsr7JsonResponseForFixture($fixture, $statusCode = 200): Psr7\Response

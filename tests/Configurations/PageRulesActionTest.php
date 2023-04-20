@@ -1,5 +1,6 @@
 <?php
-use Cloudflare\API\Configurations\PageRulesActions;
+
+use Taplink\Cloudflare\Configurations\PageRulesActions;
 
 class PageRulesActionTest extends TestCase
 {

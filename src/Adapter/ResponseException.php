@@ -6,7 +6,7 @@
  * Time: 07:23
  */
 
-namespace Cloudflare\API\Adapter;
+namespace Taplink\Cloudflare\Adapter;
 
 use GuzzleHttp\Exception\RequestException;
 
@@ -20,8 +20,8 @@ class ResponseException extends \Exception
      */
     public static function fromRequestException(RequestException $err): self
     {
-        if (!$err->hasResponse()) {
-            return new ResponseException($err->getMessage(), 0, $err);
+        if (! $err->hasResponse()) {
+            return new self($err->getMessage(), 0, $err);
         }
 
         $response = $err->getResponse();
@@ -31,14 +31,14 @@ class ResponseException extends \Exception
         if (strpos($contentType, 'application/json') !== false) {
             $json = json_decode($response->getBody());
             if (json_last_error() !== JSON_ERROR_NONE) {
-                return new ResponseException($err->getMessage(), 0, new JSONException(json_last_error_msg(), 0, $err));
+                return new self($err->getMessage(), 0, new JSONException(json_last_error_msg(), 0, $err));
             }
 
             if (isset($json->errors) && count($json->errors) >= 1) {
-                return new ResponseException($json->errors[0]->message, $json->errors[0]->code, $err);
+                return new self($json->errors[0]->message, $json->errors[0]->code, $err);
             }
         }
 
-        return new ResponseException($err->getMessage(), 0, $err);
+        return new self($err->getMessage(), 0, $err);
     }
 }

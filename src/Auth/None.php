@@ -6,7 +6,7 @@
  * Time: 19:55
  */
 
-namespace Cloudflare\API\Auth;
+namespace Taplink\Cloudflare\Auth;
 
 class None implements Auth
 {

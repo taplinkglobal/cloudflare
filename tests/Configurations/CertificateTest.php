@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Cloudflare\API\Configurations\Certificate;
+use Taplink\Cloudflare\Configurations\Certificate;
 
 class CertificateTest extends TestCase
 {

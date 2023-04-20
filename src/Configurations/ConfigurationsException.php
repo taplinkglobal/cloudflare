@@ -6,7 +6,7 @@
  * Time: 16:57
  */
 
-namespace Cloudflare\API\Configurations;
+namespace Taplink\Cloudflare\Configurations;
 
 class ConfigurationsException extends \Exception
 {

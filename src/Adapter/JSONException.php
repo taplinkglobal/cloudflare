@@ -6,7 +6,7 @@
  * Time: 06:52
  */
 
-namespace Cloudflare\API\Adapter;
+namespace Taplink\Cloudflare\Adapter;
 
 class JSONException extends \Exception
 {

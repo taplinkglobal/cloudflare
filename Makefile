@@ -3,12 +3,13 @@
 all: lint test
 
 fix:
-	php vendor/bin/php-cs-fixer fix --config=.php_cs
+	php vendor/bin/php-cs-fixer fix
 
 lint:
-	php vendor/bin/php-cs-fixer fix --config=.php_cs --dry-run
-	php vendor/bin/phpmd src/ text cleancode,codesize,controversial,design,naming,unusedcode
-	php vendor/bin/phpmd tests/ text cleancode,codesize,controversial,design,naming,unusedcode
+	php vendor/bin/php-cs-fixer fix --dry-run
+
+analyze:
+	 php vendor/bin/phpstan --memory-limit=1024M --error-format=github
 
 test:
 	php vendor/bin/phpunit --configuration phpunit.xml

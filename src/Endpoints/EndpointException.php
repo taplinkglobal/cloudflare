@@ -6,7 +6,7 @@
  * Time: 14:24
  */
 
-namespace Cloudflare\API\Endpoints;
+namespace Taplink\Cloudflare\Endpoints;
 
 class EndpointException extends \Exception
 {

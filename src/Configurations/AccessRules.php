@@ -1,6 +1,6 @@
 <?php
 
-namespace Cloudflare\API\Configurations;
+namespace Taplink\Cloudflare\Configurations;
 
 class AccessRules implements Configurations
 {

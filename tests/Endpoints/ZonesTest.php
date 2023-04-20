@@ -12,7 +12,7 @@ class ZonesTest extends TestCase
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/addZone.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('post')->willReturn($response);
 
         $mock->expects($this->once())
@@ -22,7 +22,7 @@ class ZonesTest extends TestCase
                 $this->equalTo(['name' => 'example.com', 'jump_start' => false])
             );
 
-        $zones = new \Cloudflare\API\Endpoints\Zones($mock);
+        $zones = new \Taplink\Cloudflare\Endpoints\Zones($mock);
         $result = $zones->addZone('example.com');
 
         $this->assertObjectHasAttribute('id', $result);
@@ -30,7 +30,7 @@ class ZonesTest extends TestCase
 
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/createPageRule.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('post')->willReturn($response);
 
         $mock->expects($this->once())
@@ -46,7 +46,7 @@ class ZonesTest extends TestCase
                 ])
             );
 
-        $zones = new \Cloudflare\API\Endpoints\Zones($mock);
+        $zones = new \Taplink\Cloudflare\Endpoints\Zones($mock);
         $zones->addZone('example.com', true, '01a7362d577a6c3019a474fd6f485823');
         $this->assertEquals('9a7806061c88ada191ed06f989cc3dac', $zones->getBody()->result->id);
     }
@@ -55,7 +55,7 @@ class ZonesTest extends TestCase
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/addZone.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('post')->willReturn($response);
 
         $mock->expects($this->once())
@@ -71,7 +71,7 @@ class ZonesTest extends TestCase
                 ])
             );
 
-        $zones = new \Cloudflare\API\Endpoints\Zones($mock);
+        $zones = new \Taplink\Cloudflare\Endpoints\Zones($mock);
         $result = $zones->addZone('example.com', false, '023e105f4ecef8ad9ca31a8372d0c353');
 
         $this->assertObjectHasAttribute('id', $result);
@@ -82,7 +82,7 @@ class ZonesTest extends TestCase
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/activationTest.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('put')->willReturn($response);
 
         $mock->expects($this->once())
@@ -91,7 +91,7 @@ class ZonesTest extends TestCase
                 $this->equalTo('zones/c2547eb745079dac9320b638f5e225cf483cc5cfdda41/activation_check')
             );
 
-        $zones = new \Cloudflare\API\Endpoints\Zones($mock);
+        $zones = new \Taplink\Cloudflare\Endpoints\Zones($mock);
         $result = $zones->activationCheck('c2547eb745079dac9320b638f5e225cf483cc5cfdda41');
 
         $this->assertTrue($result);
@@ -102,7 +102,7 @@ class ZonesTest extends TestCase
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/listZones.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('get')->willReturn($response);
 
         $mock->expects($this->once())
@@ -120,7 +120,7 @@ class ZonesTest extends TestCase
                 ])
             );
 
-        $zones = new \Cloudflare\API\Endpoints\Zones($mock);
+        $zones = new \Taplink\Cloudflare\Endpoints\Zones($mock);
         $result = $zones->listZones('example.com', 'active', 1, 20, 'status', 'desc');
 
         $this->assertObjectHasAttribute('result', $result);
@@ -135,14 +135,14 @@ class ZonesTest extends TestCase
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/getZoneById.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('get')->willReturn($response);
 
         $mock->expects($this->once())
              ->method('get')
              ->with($this->equalTo('zones/023e105f4ecef8ad9ca31a8372d0c353'));
 
-        $zones = new \Cloudflare\API\Endpoints\Zones($mock);
+        $zones = new \Taplink\Cloudflare\Endpoints\Zones($mock);
         $result = $zones->getZoneById('023e105f4ecef8ad9ca31a8372d0c353');
 
         $this->assertInstanceOf(\stdClass::class, $result);
@@ -154,7 +154,7 @@ class ZonesTest extends TestCase
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/getZoneId.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('get')->willReturn($response);
 
         $mock->expects($this->once())
@@ -169,7 +169,7 @@ class ZonesTest extends TestCase
                 ])
             );
 
-        $zones = new \Cloudflare\API\Endpoints\Zones($mock);
+        $zones = new \Taplink\Cloudflare\Endpoints\Zones($mock);
         $result = $zones->getZoneID('example.com');
 
         $this->assertEquals('023e105f4ecef8ad9ca31a8372d0c353', $result);
@@ -180,7 +180,7 @@ class ZonesTest extends TestCase
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/getAnalyticsDashboard.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('get')->willReturn($response);
 
         $mock->expects($this->once())
@@ -190,7 +190,7 @@ class ZonesTest extends TestCase
                 $this->equalTo(['since' => '-10080', 'until' => '0', 'continuous' => var_export(true, true)])
             );
 
-        $zones = new \Cloudflare\API\Endpoints\Zones($mock);
+        $zones = new \Taplink\Cloudflare\Endpoints\Zones($mock);
         $analytics = $zones->getAnalyticsDashboard('c2547eb745079dac9320b638f5e225cf483cc5cfdda41');
 
         $this->assertObjectHasAttribute('since', $analytics->totals);
@@ -201,7 +201,7 @@ class ZonesTest extends TestCase
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/changeDevelopmentMode.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('patch')->willReturn($response);
 
         $mock->expects($this->once())
@@ -211,7 +211,7 @@ class ZonesTest extends TestCase
                 $this->equalTo(['value' => 'on'])
             );
 
-        $zones = new \Cloudflare\API\Endpoints\Zones($mock);
+        $zones = new \Taplink\Cloudflare\Endpoints\Zones($mock);
         $result = $zones->changeDevelopmentMode('c2547eb745079dac9320b638f5e225cf483cc5cfdda41', true);
 
         $this->assertTrue($result);

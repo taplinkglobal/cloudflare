@@ -1,9 +1,9 @@
 <?php
 
-namespace Cloudflare\API\Endpoints;
+namespace Taplink\Cloudflare\Endpoints;
 
-use Cloudflare\API\Adapter\Adapter;
-use Cloudflare\API\Configurations\FirewallRuleOptions;
+use Taplink\Cloudflare\Adapter\Adapter;
+use Taplink\Cloudflare\Configurations\FirewallRuleOptions;
 
 class Firewall implements API
 {
@@ -18,11 +18,11 @@ class Firewall implements API
         string $zoneID,
         array $rules
     ): bool {
-        $query = $this->adapter->post('zones/' . $zoneID . '/firewall/rules', $rules);
+        $query = $this->adapter->post('zones/'.$zoneID.'/firewall/rules', $rules);
         $body = json_decode($query->getBody());
 
         foreach ($body->result as $result) {
-            if (!isset($result->id)) {
+            if (! isset($result->id)) {
                 return false;
             }
         }
@@ -40,8 +40,8 @@ class Firewall implements API
         $rule = array_merge([
             'filter' => [
                 'expression' => $expression,
-                'paused' => false
-            ]
+                'paused' => false,
+            ],
         ], $options->getArray());
 
         if ($description !== null) {
@@ -65,17 +65,17 @@ class Firewall implements API
             'per_page' => $perPage,
         ];
 
-        $rules = $this->adapter->get('zones/' . $zoneID . '/firewall/rules', $query);
+        $rules = $this->adapter->get('zones/'.$zoneID.'/firewall/rules', $query);
         $body = json_decode($rules->getBody());
 
-        return (object)['result' => $body->result, 'result_info' => $body->result_info];
+        return (object) ['result' => $body->result, 'result_info' => $body->result_info];
     }
 
     public function deleteFirewallRule(
         string $zoneID,
         string $ruleID
     ): bool {
-        $rule = $this->adapter->delete('zones/' . $zoneID . '/firewall/rules/' . $ruleID);
+        $rule = $this->adapter->delete('zones/'.$zoneID.'/firewall/rules/'.$ruleID);
 
         $body = json_decode($rule->getBody());
 
@@ -100,8 +100,8 @@ class Firewall implements API
             'filter' => [
                 'id' => $filterID,
                 'expression' => $expression,
-                'paused' => false
-            ]
+                'paused' => false,
+            ],
         ], $options->getArray());
 
         if ($description !== null) {
@@ -112,7 +112,7 @@ class Firewall implements API
             $rule['priority'] = $priority;
         }
 
-        $rule = $this->adapter->put('zones/' . $zoneID . '/firewall/rules/' . $ruleID, $rule);
+        $rule = $this->adapter->put('zones/'.$zoneID.'/firewall/rules/'.$ruleID, $rule);
         $body = json_decode($rule->getBody());
 
         return $body->result;

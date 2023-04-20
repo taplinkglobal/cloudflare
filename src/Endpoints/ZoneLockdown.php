@@ -6,10 +6,10 @@
  * Time: 20:33
  */
 
-namespace Cloudflare\API\Endpoints;
+namespace Taplink\Cloudflare\Endpoints;
 
-use Cloudflare\API\Adapter\Adapter;
-use Cloudflare\API\Traits\BodyAccessorTrait;
+use Taplink\Cloudflare\Adapter\Adapter;
+use Taplink\Cloudflare\Traits\BodyAccessorTrait;
 
 class ZoneLockdown implements API
 {
@@ -29,25 +29,25 @@ class ZoneLockdown implements API
     ): \stdClass {
         $query = [
             'page' => $page,
-            'per_page' => $perPage
+            'per_page' => $perPage,
         ];
 
-        $user = $this->adapter->get('zones/' . $zoneID . '/firewall/lockdowns', $query);
+        $user = $this->adapter->get('zones/'.$zoneID.'/firewall/lockdowns', $query);
         $this->body = json_decode($user->getBody());
 
-        return (object)['result' => $this->body->result, 'result_info' => $this->body->result_info];
+        return (object) ['result' => $this->body->result, 'result_info' => $this->body->result_info];
     }
 
     public function createLockdown(
         string $zoneID,
         array $urls,
-        \Cloudflare\API\Configurations\ZoneLockdown $configuration,
+        \Taplink\Cloudflare\Configurations\ZoneLockdown $configuration,
         string $lockdownID = null,
         string $description = null
     ): bool {
         $options = [
             'urls' => $urls,
-            'configurations' => $configuration->getArray()
+            'configurations' => $configuration->getArray(),
         ];
 
         if ($lockdownID !== null) {
@@ -58,7 +58,7 @@ class ZoneLockdown implements API
             $options['description'] = $description;
         }
 
-        $user = $this->adapter->post('zones/' . $zoneID . '/firewall/lockdowns', $options);
+        $user = $this->adapter->post('zones/'.$zoneID.'/firewall/lockdowns', $options);
 
         $this->body = json_decode($user->getBody());
 
@@ -71,8 +71,9 @@ class ZoneLockdown implements API
 
     public function getLockdownDetails(string $zoneID, string $lockdownID): \stdClass
     {
-        $user = $this->adapter->get('zones/' . $zoneID . '/firewall/lockdowns/' . $lockdownID);
+        $user = $this->adapter->get('zones/'.$zoneID.'/firewall/lockdowns/'.$lockdownID);
         $this->body = json_decode($user->getBody());
+
         return $this->body->result;
     }
 
@@ -80,20 +81,20 @@ class ZoneLockdown implements API
         string $zoneID,
         string $lockdownID,
         array $urls,
-        \Cloudflare\API\Configurations\ZoneLockdown $configuration,
+        \Taplink\Cloudflare\Configurations\ZoneLockdown $configuration,
         string $description = null
     ): bool {
         $options = [
             'urls' => $urls,
             'id' => $lockdownID,
-            'configurations' => $configuration->getArray()
+            'configurations' => $configuration->getArray(),
         ];
 
         if ($description !== null) {
             $options['description'] = $description;
         }
 
-        $user = $this->adapter->put('zones/' . $zoneID . '/firewall/lockdowns/' . $lockdownID, $options);
+        $user = $this->adapter->put('zones/'.$zoneID.'/firewall/lockdowns/'.$lockdownID, $options);
 
         $this->body = json_decode($user->getBody());
 
@@ -106,7 +107,7 @@ class ZoneLockdown implements API
 
     public function deleteLockdown(string $zoneID, string $lockdownID): bool
     {
-        $user = $this->adapter->delete('zones/' . $zoneID . '/firewall/lockdowns/' . $lockdownID);
+        $user = $this->adapter->delete('zones/'.$zoneID.'/firewall/lockdowns/'.$lockdownID);
 
         $this->body = json_decode($user->getBody());
 

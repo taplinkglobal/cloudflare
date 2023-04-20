@@ -1,15 +1,14 @@
 <?php
 
-use Cloudflare\API\Adapter\Adapter;
-use Cloudflare\API\Configurations\LoadBalancer;
-use Cloudflare\API\Endpoints\LoadBalancers;
+use Taplink\Cloudflare\Adapter\Adapter;
+use Taplink\Cloudflare\Configurations\LoadBalancer;
+use Taplink\Cloudflare\Endpoints\LoadBalancers;
 
 /**
  * @author Martijn Smidt <martijn@squeezely.tech>
  * User: HemeraOne
  * Date: 13/05/2019
  */
-
 class LoadBalancersTest extends TestCase
 {
     public function testCreateLoadBalancer()
@@ -17,14 +16,14 @@ class LoadBalancersTest extends TestCase
         $pools = [
             '17b5962d775c646f3f9725cbc7a53df4',
             '9290f38c5d07c2e2f4df57b1f61d4196',
-            '00920f38ce07c2e2f4df50b1f61d4194'
+            '00920f38ce07c2e2f4df50b1f61d4194',
         ];
 
         $lbConfiguration = new LoadBalancer('www.example.com', $pools, '17b5962d775c646f3f9725cbc7a53df4');
 
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/createLoadBalancer.json');
 
-        $mock = $this->getMockBuilder(Adapter::class)->getMock();
+        $mock = $this->createMock(Adapter::class);
         $mock->method('post')->willReturn($response);
 
         $mock->expects($this->once())
@@ -45,7 +44,7 @@ class LoadBalancersTest extends TestCase
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/listLoadBalancers.json');
 
-        $mock = $this->getMockBuilder(Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('get')->willReturn($response);
 
         $mock->expects($this->once())
@@ -63,7 +62,7 @@ class LoadBalancersTest extends TestCase
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/getLoadBalancerDetails.json');
 
-        $mock = $this->getMockBuilder(Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('get')->willReturn($response);
 
         $mock->expects($this->once())
@@ -82,14 +81,14 @@ class LoadBalancersTest extends TestCase
         $pools = [
             '17b5962d775c646f3f9725cbc7a53df4',
             '9290f38c5d07c2e2f4df57b1f61d4196',
-            '00920f38ce07c2e2f4df50b1f61d4194'
+            '00920f38ce07c2e2f4df50b1f61d4194',
         ];
 
         $lbConfiguration = new LoadBalancer('www.example.com', $pools, '17b5962d775c646f3f9725cbc7a53df4');
 
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/updateLoadBalancer.json');
 
-        $mock = $this->getMockBuilder(Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('put')->willReturn($response);
 
         $mock->expects($this->once())
@@ -110,7 +109,7 @@ class LoadBalancersTest extends TestCase
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/deleteLoadBalancer.json');
 
-        $mock = $this->getMockBuilder(Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('delete')->willReturn($response);
 
         $mock->expects($this->once())

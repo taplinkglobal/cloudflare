@@ -1,8 +1,8 @@
 <?php
 
-namespace Cloudflare\API\Endpoints;
+namespace Taplink\Cloudflare\Endpoints;
 
-use Cloudflare\API\Adapter\Adapter;
+use Taplink\Cloudflare\Adapter\Adapter;
 
 class Crypto implements API
 {
@@ -22,12 +22,13 @@ class Crypto implements API
     public function getOpportunisticEncryptionSetting(string $zoneID)
     {
         $return = $this->adapter->get(
-            'zones/' . $zoneID . '/settings/opportunistic_encryption'
+            'zones/'.$zoneID.'/settings/opportunistic_encryption'
         );
         $body = json_decode($return->getBody());
         if (isset($body->result)) {
             return $body->result->value;
         }
+
         return false;
     }
 
@@ -40,12 +41,13 @@ class Crypto implements API
     public function getOnionRoutingSetting(string $zoneID)
     {
         $return = $this->adapter->get(
-            'zones/' . $zoneID . '/settings/opportunistic_onion'
+            'zones/'.$zoneID.'/settings/opportunistic_onion'
         );
         $body = json_decode($return->getBody());
         if (isset($body->result)) {
             return $body->result;
         }
+
         return false;
     }
 
@@ -59,7 +61,7 @@ class Crypto implements API
     public function updateOpportunisticEncryptionSetting(string $zoneID, string $value)
     {
         $return = $this->adapter->patch(
-            'zones/' . $zoneID . '/settings/opportunistic_encryption',
+            'zones/'.$zoneID.'/settings/opportunistic_encryption',
             [
                 'value' => $value,
             ]
@@ -68,6 +70,7 @@ class Crypto implements API
         if (isset($body->success) && $body->success == true) {
             return true;
         }
+
         return false;
     }
 
@@ -81,7 +84,7 @@ class Crypto implements API
     public function updateOnionRoutingSetting(string $zoneID, string $value)
     {
         $return = $this->adapter->patch(
-            'zones/' . $zoneID . '/settings/opportunistic_onion',
+            'zones/'.$zoneID.'/settings/opportunistic_onion',
             [
                 'value' => $value,
             ]
@@ -90,6 +93,7 @@ class Crypto implements API
         if (isset($body->success) && $body->success == true) {
             return true;
         }
+
         return false;
     }
 }

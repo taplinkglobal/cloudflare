@@ -6,14 +6,13 @@
  * Date: 21/10/2018
  * Time: 09:09
  */
-
 class TLSTest extends TestCase
 {
     public function testGetTLSClientAuth()
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/getTLSClientAuth.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('get')->willReturn($response);
 
         $mock->expects($this->once())
@@ -22,7 +21,7 @@ class TLSTest extends TestCase
                 $this->equalTo('zones/c2547eb745079dac9320b638f5e225cf483cc5cfdda41/settings/tls_client_auth')
             );
 
-        $tlsMock = new \Cloudflare\API\Endpoints\TLS($mock);
+        $tlsMock = new \Taplink\Cloudflare\Endpoints\TLS($mock);
         $result = $tlsMock->getTLSClientAuth('c2547eb745079dac9320b638f5e225cf483cc5cfdda41');
 
         $this->assertEquals('off', $result);
@@ -32,7 +31,7 @@ class TLSTest extends TestCase
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/enableTLS13.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('patch')->willReturn($response);
 
         $mock->expects($this->once())
@@ -42,7 +41,7 @@ class TLSTest extends TestCase
                 $this->equalTo(['value' => 'on'])
             );
 
-        $tlsMock = new \Cloudflare\API\Endpoints\TLS($mock);
+        $tlsMock = new \Taplink\Cloudflare\Endpoints\TLS($mock);
         $result = $tlsMock->enableTLS13('c2547eb745079dac9320b638f5e225cf483cc5cfdda41', true);
 
         $this->assertTrue($result);
@@ -52,7 +51,7 @@ class TLSTest extends TestCase
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/disableTLS13.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('patch')->willReturn($response);
 
         $mock->expects($this->once())
@@ -62,7 +61,7 @@ class TLSTest extends TestCase
                 $this->equalTo(['value' => 'off'])
             );
 
-        $tlsMock = new \Cloudflare\API\Endpoints\TLS($mock);
+        $tlsMock = new \Taplink\Cloudflare\Endpoints\TLS($mock);
         $result = $tlsMock->disableTLS13('c2547eb745079dac9320b638f5e225cf483cc5cfdda41', true);
 
         $this->assertTrue($result);
@@ -72,7 +71,7 @@ class TLSTest extends TestCase
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/changeMinimumTLSVersion.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('patch')->willReturn($response);
 
         $mock->expects($this->once())
@@ -82,7 +81,7 @@ class TLSTest extends TestCase
                 $this->equalTo(['value' => '1.1'])
             );
 
-        $tlsMock = new \Cloudflare\API\Endpoints\TLS($mock);
+        $tlsMock = new \Taplink\Cloudflare\Endpoints\TLS($mock);
         $result = $tlsMock->changeMinimumTLSVersion('c2547eb745079dac9320b638f5e225cf483cc5cfdda41', '1.1');
 
         $this->assertTrue($result);
@@ -92,7 +91,7 @@ class TLSTest extends TestCase
     {
         $response = $this->getPsr7JsonResponseForFixture('Endpoints/updateTLSClientAuth.json');
 
-        $mock = $this->getMockBuilder(\Cloudflare\API\Adapter\Adapter::class)->getMock();
+        $mock = $this->createMock(\Taplink\Cloudflare\Adapter\Adapter::class);
         $mock->method('patch')->willReturn($response);
 
         $mock->expects($this->once())
@@ -102,7 +101,7 @@ class TLSTest extends TestCase
                 $this->equalTo(['value' => 'off'])
             );
 
-        $tlsMock = new \Cloudflare\API\Endpoints\TLS($mock);
+        $tlsMock = new \Taplink\Cloudflare\Endpoints\TLS($mock);
         $result = $tlsMock->updateTLSClientAuth('c2547eb745079dac9320b638f5e225cf483cc5cfdda41', 'off');
 
         $this->assertTrue($result);

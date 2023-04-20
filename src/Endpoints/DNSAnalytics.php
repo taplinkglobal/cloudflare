@@ -6,11 +6,12 @@
  * Time: 03:40 AM
  */
 
-namespace Cloudflare\API\Endpoints;
+namespace Taplink\Cloudflare\Endpoints;
 
-use Cloudflare\API\Adapter\Adapter;
-use Cloudflare\API\Traits\BodyAccessorTrait;
-use Cloudflare\API\Configurations\DNSAnalytics as Configs;
+use stdClass;
+use Taplink\Cloudflare\Adapter\Adapter;
+use Taplink\Cloudflare\Configurations\DNSAnalytics as Configs;
+use Taplink\Cloudflare\Traits\BodyAccessorTrait;
 
 class DNSAnalytics implements API
 {
@@ -26,15 +27,17 @@ class DNSAnalytics implements API
     /**
      * Retrieves a list of summarised aggregate metrics over a given time period.
      *
-     * @param string $zoneID ID of zone to get report for
-     * @param string $dimensions Comma separated names of dimensions
-     * @param string $metrics Comma separated names of dimension to get metrics for
-     * @param string $sort Comma separated names of dimension to sort by prefixed by order - (descending) or + (ascending)
-     * @param string $filters Segmentation filter in 'attribute operator value' format
-     * @param string $since Start date and time of requesting data period in the ISO8601 format
-     * @param string $until End date and time of requesting data period in the ISO8601 format
-     * @param string $limit Limit number of returned metrics
-     * @return array
+     * @param  string  $zoneID  ID of zone to get report for
+     * @param  array  $dimensions  Comma separated names of dimensions
+     * @param  array  $metrics  Comma separated names of dimension to get metrics for
+     * @param  array  $sort  Comma separated names of dimension to sort by prefixed by order - (descending) or + (ascending)
+     * @param  string  $filters  Segmentation filter in 'attribute operator value' format
+     * @param  string  $since  Start date and time of requesting data period in the ISO8601 format
+     * @param  string  $until  End date and time of requesting data period in the ISO8601 format
+     * @param  int  $limit  Limit number of returned metrics
+     *
+     * @return stdClass
+     * @throws EndpointException
      */
     public function getReportTable(
         string $zoneID,
@@ -45,7 +48,7 @@ class DNSAnalytics implements API
         string $since = '',
         string $until = '',
         int $limit = 100
-    ): \stdClass {
+    ): stdClass {
         if (count($dimensions) === 0) {
             throw new EndpointException(
                 'At least one dimension is required for getting a report.'
@@ -58,13 +61,13 @@ class DNSAnalytics implements API
             );
         }
 
-        if (!$since) {
+        if (! $since) {
             throw new EndpointException(
                 'Start date is required for getting a report.'
             );
         }
 
-        if (!$until) {
+        if (! $until) {
             throw new EndpointException(
                 'End date is required for getting a report.'
             );
@@ -74,7 +77,7 @@ class DNSAnalytics implements API
             'dimensions' => implode(',', $dimensions),
             'metrics' => implode(',', $metrics),
             'since' => $since,
-            'until' => $until
+            'until' => $until,
         ];
 
         if (count($sort) !== 0) {
@@ -89,7 +92,7 @@ class DNSAnalytics implements API
             $options['limit'] = $limit;
         }
 
-        $endpoint = 'zones/' . $zoneID . '/dns_analytics/report';
+        $endpoint = 'zones/'.$zoneID.'/dns_analytics/report';
 
         $report = $this->adapter->get($endpoint, $options);
 
@@ -101,16 +104,17 @@ class DNSAnalytics implements API
     /**
      * Retrieves a list of aggregate metrics grouped by time interval.
      *
-     * @param string $zoneID ID of zone to get report for
-     * @param string $dimensions Comma separated names of dimensions
-     * @param string $metrics Comma separated names of dimension to get metrics for
-     * @param string $sort Comma separated names of dimension to sort by prefixed by order - (descending) or + (ascending)
-     * @param string $filters Segmentation filter in 'attribute operator value' format
-     * @param string $since Start date and time of requesting data period in the ISO8601 format
-     * @param string $until End date and time of requesting data period in the ISO8601 format
-     * @param string $limit Limit number of returned metrics
-     * @param string $timeDelta Unit of time to group data by
-     * @return array
+     * @param  string  $zoneID  ID of zone to get report for
+     * @param  array  $dimensions  Comma separated names of dimensions
+     * @param  array  $metrics  Comma separated names of dimension to get metrics for
+     * @param  array  $sort  Comma separated names of dimension to sort by prefixed by order - (descending) or + (ascending)
+     * @param  string  $filters  Segmentation filter in 'attribute operator value' format
+     * @param  string  $since  Start date and time of requesting data period in the ISO8601 format
+     * @param  string  $until  End date and time of requesting data period in the ISO8601 format
+     * @param  int  $limit  Limit number of returned metrics
+     * @param  string  $timeDelta  Unit of time to group data by
+     *
+     * @return stdClass
      */
     public function getReportByTime(
         string $zoneID,
@@ -122,7 +126,7 @@ class DNSAnalytics implements API
         string $until = '',
         int $limit = 100,
         string $timeDelta = ''
-    ): \stdClass {
+    ): stdClass {
         $options = new Configs();
         $options->setDimensions($dimensions);
         $options->setMetrics($metrics);
@@ -133,7 +137,7 @@ class DNSAnalytics implements API
         $options->setLimit($limit);
         $options->setTimeDelta($timeDelta);
 
-        $endpoint = 'zones/' . $zoneID . '/dns_analytics/report/bytime';
+        $endpoint = 'zones/'.$zoneID.'/dns_analytics/report/bytime';
 
         $report = $this->adapter->get($endpoint, $options->getArray());
 

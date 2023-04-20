@@ -6,7 +6,7 @@
  * Time: 18:41
  */
 
-use Cloudflare\API\Configurations\PageRulesTargets;
+use Taplink\Cloudflare\Configurations\PageRulesTargets;
 
 class PageRulesTargetTest extends TestCase
 {

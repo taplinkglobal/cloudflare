@@ -5,7 +5,7 @@
  * Date: 13/05/2019
  */
 
-namespace Cloudflare\API\Configurations;
+namespace Taplink\Cloudflare\Configurations;
 
 class LoadBalancer implements Configurations
 {
@@ -51,8 +51,8 @@ class LoadBalancer implements Configurations
     public function setSteeringPolicy(string $steeringPolicy = '')
     {
         $allowedOptions = ['off', 'geo', 'random', 'dynamic_latency', ''];
-        if (!in_array($steeringPolicy, $allowedOptions)) {
-            throw new ConfigurationsException('Given steering policy value is not a valid option, valid options are: ' . implode(', ', $allowedOptions));
+        if (! in_array($steeringPolicy, $allowedOptions)) {
+            throw new ConfigurationsException('Given steering policy value is not a valid option, valid options are: '.implode(', ', $allowedOptions));
         }
 
         $this->configs['steering_policy'] = $steeringPolicy;
@@ -80,7 +80,7 @@ class LoadBalancer implements Configurations
 
     public function isDisabled():bool
     {
-        return !$this->configs['enabled'] ?? false;
+        return ! $this->configs['enabled'] ?? false;
     }
 
     public function getEnabled():bool
@@ -121,8 +121,8 @@ class LoadBalancer implements Configurations
     public function setSessionAffinity(string $sessionAffinity = '')
     {
         $allowedOptions = ['none', 'cookie', 'ip_cookie', ''];
-        if (!in_array($sessionAffinity, $allowedOptions)) {
-            throw new ConfigurationsException('Given session affinity value is not a valid option, valid options are: ' . implode(', ', $allowedOptions));
+        if (! in_array($sessionAffinity, $allowedOptions)) {
+            throw new ConfigurationsException('Given session affinity value is not a valid option, valid options are: '.implode(', ', $allowedOptions));
         }
         $this->configs['session_affinity'] = $sessionAffinity;
     }

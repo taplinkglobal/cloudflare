@@ -5,16 +5,17 @@
  * Time: 16:55
  */
 
-namespace Cloudflare\API\Auth;
+namespace Taplink\Cloudflare\Auth;
 
 class APIKey implements Auth
 {
     private $email;
+
     private $apiKey;
 
     public function __construct(string $email, string $apiKey)
     {
-        $this->email  = $email;
+        $this->email = $email;
         $this->apiKey = $apiKey;
     }
 
@@ -22,7 +23,7 @@ class APIKey implements Auth
     {
         return [
             'X-Auth-Email'   => $this->email,
-            'X-Auth-Key' => $this->apiKey
+            'X-Auth-Key' => $this->apiKey,
         ];
     }
 }

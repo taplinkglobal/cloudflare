@@ -6,7 +6,7 @@
  * Time: 15:23
  */
 
-namespace Cloudflare\API\Configurations;
+namespace Taplink\Cloudflare\Configurations;
 
 interface Configurations
 {

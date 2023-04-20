@@ -1,8 +1,8 @@
 <?php
 
-namespace Cloudflare\API\Endpoints;
+namespace Taplink\Cloudflare\Endpoints;
 
-use Cloudflare\API\Adapter\Adapter;
+use Taplink\Cloudflare\Adapter\Adapter;
 
 class SSL implements API
 {
@@ -22,12 +22,13 @@ class SSL implements API
     public function getSSLSetting(string $zoneID)
     {
         $return = $this->adapter->get(
-            'zones/' . $zoneID . '/settings/ssl'
+            'zones/'.$zoneID.'/settings/ssl'
         );
         $body = json_decode($return->getBody());
         if (isset($body->result)) {
             return $body->result->value;
         }
+
         return false;
     }
 
@@ -43,9 +44,9 @@ class SSL implements API
     public function getSSLVerificationStatus(string $zoneID, bool $retry = false)
     {
         $return = $this->adapter->get(
-            'zones/' . $zoneID . '/ssl/verification',
+            'zones/'.$zoneID.'/ssl/verification',
             [
-                'retry' => $retry
+                'retry' => $retry,
             ]
         );
 
@@ -53,6 +54,7 @@ class SSL implements API
         if (isset($body->result)) {
             return $body;
         }
+
         return false;
     }
 
@@ -65,12 +67,13 @@ class SSL implements API
     public function getHTTPSRedirectSetting(string $zoneID)
     {
         $return = $this->adapter->get(
-            'zones/' . $zoneID . '/settings/always_use_https'
+            'zones/'.$zoneID.'/settings/always_use_https'
         );
         $body = json_decode($return->getBody());
         if (isset($body->result)) {
             return $body->result;
         }
+
         return false;
     }
 
@@ -83,12 +86,13 @@ class SSL implements API
     public function getHTTPSRewritesSetting(string $zoneID)
     {
         $return = $this->adapter->get(
-            'zones/' . $zoneID . '/settings/automatic_https_rewrites'
+            'zones/'.$zoneID.'/settings/automatic_https_rewrites'
         );
         $body = json_decode($return->getBody());
         if (isset($body->result)) {
             return $body->result;
         }
+
         return false;
     }
 
@@ -102,7 +106,7 @@ class SSL implements API
     public function updateSSLSetting(string $zoneID, string $value)
     {
         $return = $this->adapter->patch(
-            'zones/' . $zoneID . '/settings/ssl',
+            'zones/'.$zoneID.'/settings/ssl',
             [
                 'value' => $value,
             ]
@@ -111,6 +115,7 @@ class SSL implements API
         if (isset($body->success) && $body->success == true) {
             return true;
         }
+
         return false;
     }
 
@@ -124,7 +129,7 @@ class SSL implements API
     public function updateHTTPSRedirectSetting(string $zoneID, string $value)
     {
         $return = $this->adapter->patch(
-            'zones/' . $zoneID . '/settings/always_use_https',
+            'zones/'.$zoneID.'/settings/always_use_https',
             [
                 'value' => $value,
             ]
@@ -133,6 +138,7 @@ class SSL implements API
         if (isset($body->success) && $body->success == true) {
             return true;
         }
+
         return false;
     }
 
@@ -146,7 +152,7 @@ class SSL implements API
     public function updateHTTPSRewritesSetting(string $zoneID, string $value)
     {
         $return = $this->adapter->patch(
-            'zones/' . $zoneID . '/settings/automatic_https_rewrites',
+            'zones/'.$zoneID.'/settings/automatic_https_rewrites',
             [
                 'value' => $value,
             ]
@@ -155,6 +161,7 @@ class SSL implements API
         if (isset($body->success) && $body->success == true) {
             return true;
         }
+
         return false;
     }
 
@@ -169,7 +176,7 @@ class SSL implements API
     public function updateSSLCertificatePackValidationMethod(string $zoneID, string $certPackUUID, string $validationMethod)
     {
         $return = $this->adapter->patch(
-            'zones/' . $zoneID . '/ssl/verification/' . $certPackUUID,
+            'zones/'.$zoneID.'/ssl/verification/'.$certPackUUID,
             [
                 'validation_method' => $validationMethod,
             ]
@@ -178,6 +185,7 @@ class SSL implements API
         if (isset($body->success) && $body->success == true) {
             return true;
         }
+
         return false;
     }
 }

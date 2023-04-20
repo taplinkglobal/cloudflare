@@ -1,10 +1,10 @@
 <?php
 
-namespace Cloudflare\API\Endpoints;
+namespace Taplink\Cloudflare\Endpoints;
 
-use Cloudflare\API\Adapter\Adapter;
-use Cloudflare\API\Traits\BodyAccessorTrait;
 use stdClass;
+use Taplink\Cloudflare\Adapter\Adapter;
+use Taplink\Cloudflare\Traits\BodyAccessorTrait;
 
 class ZoneSubscriptions implements API
 {
@@ -20,12 +20,12 @@ class ZoneSubscriptions implements API
         $this->adapter = $adapter;
     }
 
-    public function listZoneSubscriptions(string $zoneId): \stdClass
+    public function listZoneSubscriptions(string $zoneId): stdClass
     {
-        $user = $this->adapter->get('zones/' . $zoneId . '/subscriptions');
+        $user = $this->adapter->get('zones/'.$zoneId.'/subscriptions');
         $this->body = json_decode($user->getBody());
 
-        return (object)[
+        return (object) [
             'result' => $this->body->result,
         ];
     }
@@ -41,10 +41,10 @@ class ZoneSubscriptions implements API
         }
 
         $existingSubscription = $this->listZoneSubscriptions($zoneId);
-        $method               = empty($existingSubscription->result) ? 'post' : 'put';
+        $method = empty($existingSubscription->result) ? 'post' : 'put';
 
-        $subscription = $this->adapter->{$method}('zones/' . $zoneId . '/subscription', $options);
-        $this->body   = json_decode($subscription->getBody());
+        $subscription = $this->adapter->{$method}('zones/'.$zoneId.'/subscription', $options);
+        $this->body = json_decode($subscription->getBody());
 
         return $this->body->result;
     }

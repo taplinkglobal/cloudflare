@@ -6,7 +6,7 @@
  * Time: 15:22
  */
 
-namespace Cloudflare\API\Configurations;
+namespace Taplink\Cloudflare\Configurations;
 
 class UARules implements Configurations
 {

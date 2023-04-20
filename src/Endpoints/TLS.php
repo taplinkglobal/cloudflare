@@ -6,9 +6,9 @@
  * Time: 09:10
  */
 
-namespace Cloudflare\API\Endpoints;
+namespace Taplink\Cloudflare\Endpoints;
 
-use Cloudflare\API\Adapter\Adapter;
+use Taplink\Cloudflare\Adapter\Adapter;
 
 class TLS implements API
 {
@@ -28,12 +28,13 @@ class TLS implements API
     public function getTLSClientAuth($zoneID)
     {
         $return = $this->adapter->get(
-            'zones/' . $zoneID . '/settings/tls_client_auth'
+            'zones/'.$zoneID.'/settings/tls_client_auth'
         );
-        $body   = json_decode($return->getBody());
+        $body = json_decode($return->getBody());
         if (isset($body->result)) {
             return $body->result->value;
         }
+
         return false;
     }
 
@@ -46,13 +47,14 @@ class TLS implements API
     public function enableTLS13($zoneID)
     {
         $return = $this->adapter->patch(
-            'zones/' . $zoneID . '/settings/tls_1_3',
+            'zones/'.$zoneID.'/settings/tls_1_3',
             ['value' => 'on']
         );
-        $body   = json_decode($return->getBody());
+        $body = json_decode($return->getBody());
         if (isset($body->success) && $body->success == true) {
             return true;
         }
+
         return false;
     }
 
@@ -65,13 +67,14 @@ class TLS implements API
     public function disableTLS13($zoneID)
     {
         $return = $this->adapter->patch(
-            'zones/' . $zoneID . '/settings/tls_1_3',
+            'zones/'.$zoneID.'/settings/tls_1_3',
             ['value' => 'off']
         );
-        $body   = json_decode($return->getBody());
+        $body = json_decode($return->getBody());
         if (isset($body->success) && $body->success == true) {
             return true;
         }
+
         return false;
     }
 
@@ -85,15 +88,16 @@ class TLS implements API
     public function changeMinimumTLSVersion($zoneID, $minimumVersion)
     {
         $return = $this->adapter->patch(
-            'zones/' . $zoneID . '/settings/min_tls_version',
+            'zones/'.$zoneID.'/settings/min_tls_version',
             [
                 'value' => $minimumVersion,
             ]
         );
-        $body   = json_decode($return->getBody());
+        $body = json_decode($return->getBody());
         if (isset($body->success) && $body->success == true) {
             return true;
         }
+
         return false;
     }
 
@@ -107,15 +111,16 @@ class TLS implements API
     public function updateTLSClientAuth($zoneID, $value)
     {
         $return = $this->adapter->patch(
-            'zones/' . $zoneID . '/settings/tls_client_auth',
+            'zones/'.$zoneID.'/settings/tls_client_auth',
             [
                 'value' => $value,
             ]
         );
-        $body   = json_decode($return->getBody());
+        $body = json_decode($return->getBody());
         if (isset($body->success) && $body->success == true) {
             return true;
         }
+
         return false;
     }
 }

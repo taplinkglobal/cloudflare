@@ -6,10 +6,10 @@
  * Time: 15:45
  */
 
-namespace Cloudflare\API\Endpoints;
+namespace Taplink\Cloudflare\Endpoints;
 
-use Cloudflare\API\Adapter\Adapter;
-use Cloudflare\API\Traits\BodyAccessorTrait;
+use Taplink\Cloudflare\Adapter\Adapter;
+use Taplink\Cloudflare\Traits\BodyAccessorTrait;
 
 class Zones implements API
 {
@@ -34,10 +34,10 @@ class Zones implements API
     {
         $options = [
             'name' => $name,
-            'jump_start' => $jumpStart
+            'jump_start' => $jumpStart,
         ];
 
-        if (!empty($accountId)) {
+        if (! empty($accountId)) {
             $options['account'] = [
                 'id' => $accountId,
             ];
@@ -45,12 +45,13 @@ class Zones implements API
 
         $user = $this->adapter->post('zones', $options);
         $this->body = json_decode($user->getBody());
+
         return $this->body->result;
     }
 
     public function activationCheck(string $zoneID): bool
     {
-        $user = $this->adapter->put('zones/' . $zoneID . '/activation_check');
+        $user = $this->adapter->put('zones/'.$zoneID.'/activation_check');
         $this->body = json_decode($user->getBody());
 
         if (isset($this->body->result->id)) {
@@ -62,7 +63,7 @@ class Zones implements API
 
     public function pause(string $zoneID): bool
     {
-        $user = $this->adapter->patch('zones/' . $zoneID, ['paused' => true]);
+        $user = $this->adapter->patch('zones/'.$zoneID, ['paused' => true]);
         $this->body = json_decode($user->getBody());
 
         if (isset($this->body->result->id)) {
@@ -74,7 +75,7 @@ class Zones implements API
 
     public function unpause(string $zoneID): bool
     {
-        $user = $this->adapter->patch('zones/' . $zoneID, ['paused' => false]);
+        $user = $this->adapter->patch('zones/'.$zoneID, ['paused' => false]);
         $this->body = json_decode($user->getBody());
 
         if (isset($this->body->result->id)) {
@@ -87,10 +88,10 @@ class Zones implements API
     public function getZoneById(
         string $zoneId
     ): \stdClass {
-        $user = $this->adapter->get('zones/' . $zoneId);
+        $user = $this->adapter->get('zones/'.$zoneId);
         $this->body = json_decode($user->getBody());
 
-        return (object)['result' => $this->body->result];
+        return (object) ['result' => $this->body->result];
     }
 
     public function listZones(
@@ -105,29 +106,29 @@ class Zones implements API
         $query = [
             'page' => $page,
             'per_page' => $perPage,
-            'match' => $match
+            'match' => $match,
         ];
 
-        if (!empty($name)) {
+        if (! empty($name)) {
             $query['name'] = $name;
         }
 
-        if (!empty($status)) {
+        if (! empty($status)) {
             $query['status'] = $status;
         }
 
-        if (!empty($order)) {
+        if (! empty($order)) {
             $query['order'] = $order;
         }
 
-        if (!empty($direction)) {
+        if (! empty($direction)) {
             $query['direction'] = $direction;
         }
 
         $user = $this->adapter->get('zones', $query);
         $this->body = json_decode($user->getBody());
 
-        return (object)['result' => $this->body->result, 'result_info' => $this->body->result_info];
+        return (object) ['result' => $this->body->result, 'result_info' => $this->body->result_info];
     }
 
     public function getZoneID(string $name = ''): string
@@ -152,7 +153,7 @@ class Zones implements API
      */
     public function getAnalyticsDashboard(string $zoneID, string $since = '-10080', string $until = '0', bool $continuous = true): \stdClass
     {
-        $response = $this->adapter->get('zones/' . $zoneID . '/analytics/dashboard', ['since' => $since, 'until' => $until, 'continuous' => var_export($continuous, true)]);
+        $response = $this->adapter->get('zones/'.$zoneID.'/analytics/dashboard', ['since' => $since, 'until' => $until, 'continuous' => var_export($continuous, true)]);
 
         $this->body = $response->getBody();
 
@@ -168,7 +169,7 @@ class Zones implements API
      */
     public function changeDevelopmentMode(string $zoneID, bool $enable = false): bool
     {
-        $response = $this->adapter->patch('zones/' . $zoneID . '/settings/development_mode', ['value' => $enable ? 'on' : 'off']);
+        $response = $this->adapter->patch('zones/'.$zoneID.'/settings/development_mode', ['value' => $enable ? 'on' : 'off']);
 
         $this->body = json_decode($response->getBody());
 
@@ -186,7 +187,7 @@ class Zones implements API
      */
     public function getCachingLevel(string $zoneID): string
     {
-        $response = $this->adapter->get('zones/' . $zoneID . '/settings/cache_level');
+        $response = $this->adapter->get('zones/'.$zoneID.'/settings/cache_level');
 
         $this->body = json_decode($response->getBody());
 
@@ -201,7 +202,7 @@ class Zones implements API
      */
     public function setCachingLevel(string $zoneID, string $level = 'aggressive'): bool
     {
-        $response = $this->adapter->patch('zones/' . $zoneID . '/settings/cache_level', ['value' => $level]);
+        $response = $this->adapter->patch('zones/'.$zoneID.'/settings/cache_level', ['value' => $level]);
 
         $this->body = json_decode($response->getBody());
 
@@ -219,7 +220,7 @@ class Zones implements API
      */
     public function cachePurgeEverything(string $zoneID): bool
     {
-        $user = $this->adapter->post('zones/' . $zoneID . '/purge_cache', ['purge_everything' => true]);
+        $user = $this->adapter->post('zones/'.$zoneID.'/purge_cache', ['purge_everything' => true]);
 
         $this->body = json_decode($user->getBody());
 
@@ -237,19 +238,19 @@ class Zones implements API
         }
 
         $options = [];
-        if (!is_null($files)) {
+        if (! is_null($files)) {
             $options['files'] = $files;
         }
 
-        if (!is_null($tags)) {
+        if (! is_null($tags)) {
             $options['tags'] = $tags;
         }
 
-        if (!is_null($hosts)) {
+        if (! is_null($hosts)) {
             $options['hosts'] = $hosts;
         }
 
-        $user = $this->adapter->post('zones/' . $zoneID . '/purge_cache', $options);
+        $user = $this->adapter->post('zones/'.$zoneID.'/purge_cache', $options);
 
         $this->body = json_decode($user->getBody());
 
@@ -265,7 +266,7 @@ class Zones implements API
      */
     public function deleteZone(string $identifier): bool
     {
-        $user = $this->adapter->delete('zones/' . $identifier);
+        $user = $this->adapter->delete('zones/'.$identifier);
         $this->body = json_decode($user->getBody());
         if (isset($this->body->result->id)) {
             return true;

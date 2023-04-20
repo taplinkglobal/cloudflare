@@ -1,12 +1,12 @@
 <?php
 
-namespace Cloudflare\API\Configurations;
+namespace Taplink\Cloudflare\Configurations;
 
 class FirewallRuleOptions implements Configurations
 {
     protected $configs = [
         'paused' => false,
-        'action' => 'block'
+        'action' => 'block',
     ];
 
     public function getArray(): array

@@ -5,7 +5,7 @@
  * Date: 13/05/2019
  */
 
-namespace Cloudflare\API\Configurations;
+namespace Taplink\Cloudflare\Configurations;
 
 class Pool implements Configurations
 {
@@ -30,10 +30,10 @@ class Pool implements Configurations
     public function setOrigins(array $origins)
     {
         foreach ($origins as $origin) {
-            if (!isset($origin['name'])) {
+            if (! isset($origin['name'])) {
                 throw new ConfigurationsException('name is required for origin');
             }
-            if (!isset($origin['address'])) {
+            if (! isset($origin['address'])) {
                 throw new ConfigurationsException('address is required for origin');
             }
         }
@@ -72,7 +72,7 @@ class Pool implements Configurations
 
     public function isDisabled():bool
     {
-        return !$this->configs['enabled'] ?? false;
+        return ! $this->configs['enabled'] ?? false;
     }
 
     public function getEnabled():bool

@@ -1,10 +1,11 @@
 <?php
 
-namespace Cloudflare\API\Endpoints;
+namespace Taplink\Cloudflare\Endpoints;
 
-use Cloudflare\API\Adapter\Adapter;
-use Cloudflare\API\Configurations\Certificate as CertificateConfig;
-use Cloudflare\API\Traits\BodyAccessorTrait;
+use stdClass;
+use Taplink\Cloudflare\Adapter\Adapter;
+use Taplink\Cloudflare\Configurations\Certificate as CertificateConfig;
+use Taplink\Cloudflare\Traits\BodyAccessorTrait;
 
 class Certificates implements API
 {
@@ -21,14 +22,14 @@ class Certificates implements API
      * List all existing Origin CA certificates for a given zone
      *
      * @param string $zoneID
-     * @return array
+     * @return stdClass
      */
-    public function listCertificates(string $zoneID): \stdClass
+    public function listCertificates(string $zoneID): stdClass
     {
         $certificates = $this->adapter->get('certificates', ['zone_id' => $zoneID]);
         $this->body = json_decode($certificates->getBody());
 
-        return (object)['result' => $this->body->result];
+        return (object) ['result' => $this->body->result];
     }
 
     /**
@@ -43,7 +44,7 @@ class Certificates implements API
         $certificates = $this->adapter->get('certificates/'.$certificateID, ['zone_id' => $zoneID]);
         $this->body = json_decode($certificates->getBody());
 
-        return (object)['result' => $this->body->result];
+        return (object) ['result' => $this->body->result];
     }
 
     /**
