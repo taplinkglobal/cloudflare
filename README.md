@@ -1,10 +1,4 @@
-# Cloudflare SDK (v4 API Binding for PHP 7)
-
-[![Build Status](https://travis-ci.org/cloudflare/cloudflare-php.svg?branch=master)](https://travis-ci.org/cloudflare/cloudflare-php)
-
-## Installation
-
-The recommended way to install this package is via the Packagist Dependency Manager ([cloudflare/sdk](https://packagist.org/packages/cloudflare/sdk)). You can get specific usage examples on the Cloudflare Knowledge Base under: [Cloudflare PHP API Binding](https://support.cloudflare.com/hc/en-us/articles/115001661191)
+# Cloudflare SDK (v4 API Binding for PHP 7) forked and modified by Tap.link team.
 
 ## Cloudflare API version 4
 
